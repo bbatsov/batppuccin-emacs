@@ -1,0 +1,24 @@
+# Byte-compiled Emacs Lisp
+*.elc
+
+# Package archives
+*.tar
+
+# Emacs backup and auto-save
+*~
+\#*\#
+.\#*
+
+# Emacs directory-local variables
+.dir-locals-2.el
+
+# Cask / Eask
+.cask/
+dist/
+
+# Claude Code
+.claude/
+
+# OS junk
+.DS_Store
+Thumbs.db
