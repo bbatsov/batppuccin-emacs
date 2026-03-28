@@ -14,6 +14,8 @@ The [official catppuccin/emacs](https://github.com/catppuccin/emacs) port has so
 - Loads color definitions from an external file using `load-file-name`, which is nil in certain `load-theme` code paths (e.g., when Emacs hasn't marked the theme as safe yet). This causes the theme to fail to load entirely for some users.
 - No semantic color layer -- faces reference raw palette colors directly, making it hard to reason about color assignments or adjust them systematically.
 
+I think this is partly because the official Emacs port tries to mimic the structure of the original Neovim version. That works (despite being odd by Emacs standards) and the maintainers seem to like the approach, but it doesn't sit well with me.
+
 ### Style Guide Deviations
 
 - `font-lock-variable-name-face` is set to the default text color, making variables indistinguishable from surrounding text. The style guide assigns distinct colors to variables and properties.
