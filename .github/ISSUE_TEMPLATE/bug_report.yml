@@ -1,0 +1,52 @@
+name: Bug Report
+description: Report an issue with a face or color.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please make sure you're running the latest version and that the
+        problem hasn't been reported already.
+
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Theme variant
+      description: Which variant are you using?
+      options:
+        - batppuccin-mocha
+        - batppuccin-macchiato
+        - batppuccin-frappe
+        - batppuccin-latte
+        - All variants
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to see?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What did you see instead? Please include a screenshot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        Please include your Emacs version and OS.
+      placeholder: |
+        Emacs: 30.1
+        System: macOS / Linux / Windows
+      render: text
+    validations:
+      required: true

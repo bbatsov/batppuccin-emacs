@@ -1,0 +1,19 @@
+name: Feature Request
+description: Request support for a new package or face.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: package
+    attributes:
+      label: Package / face
+      description: Which package or face would you like themed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any screenshots, links to the package, or color suggestions.
+    validations:
+      required: false
