@@ -6,7 +6,6 @@
 ;; URL: https://github.com/bbatsov/batppuccin-emacs
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "27.1"))
-;; Package-Prefix: batppuccin
 ;; Keywords: faces themes
 
 ;; This program is free software; you can redistribute it and/or modify
