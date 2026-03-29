@@ -37,20 +37,26 @@
 
 (require 'cl-lib)
 
-(defgroup batppuccin-themes nil
+(defgroup batppuccin nil
   "Batppuccin theme family."
   :group 'faces
   :prefix "batppuccin-"
   :link '(url-link :tag "GitHub" "https://github.com/bbatsov/batppuccin-emacs")
   :tag "Batppuccin")
 
-(defcustom batppuccin-themes-override-colors-alist '()
+(defcustom batppuccin-scale-headings t
+  "Whether to scale headings in org, outline, markdown, shr, and info.
+Set to nil for uniform heading sizes.  Takes effect on theme load."
+  :type 'boolean
+  :group 'batppuccin)
+
+(defcustom batppuccin-override-colors-alist '()
   "Alist of color overrides applied to all variants.
 Each entry should be a cons cell (NAME . VALUE) where NAME is a
 color name from any variant's palette and VALUE is the
 replacement hex color string."
   :type '(alist :key-type string :value-type string)
-  :group 'batppuccin-themes)
+  :group 'batppuccin)
 
 ;;; Color Palettes
 ;;
@@ -258,7 +264,7 @@ The light flavor.")
 
 (defun batppuccin--apply-theme (theme-name colors-alist)
   "Apply the Batppuccin face definitions to THEME-NAME using COLORS-ALIST."
-  (let* ((merged (append batppuccin-themes-override-colors-alist colors-alist))
+  (let* ((merged (append batppuccin-override-colors-alist colors-alist))
          (class '((class color) (min-colors 89))))
     (cl-flet ((c (name) (cdr (assoc name merged))))
       (let ((bat-crust         (c "bat-crust"))
@@ -297,7 +303,11 @@ The light flavor.")
             (bat-heading3      (c "bat-heading3"))
             (bat-heading4      (c "bat-heading4"))
             (bat-heading5      (c "bat-heading5"))
-            (bat-heading6      (c "bat-heading6")))
+            (bat-heading6      (c "bat-heading6"))
+            (h1 (if batppuccin-scale-headings 1.3 1.0))
+            (h2 (if batppuccin-scale-headings 1.2 1.0))
+            (h3 (if batppuccin-scale-headings 1.1 1.0))
+            (h-doc (if batppuccin-scale-headings 1.4 1.0)))
 
         (custom-theme-set-faces
          theme-name
@@ -574,9 +584,9 @@ The light flavor.")
          `(info-menu-header ((,class (:foreground ,bat-text :weight bold))))
          `(info-menu-star ((,class (:foreground ,bat-red))))
          `(info-node ((,class (:foreground ,bat-blue :weight bold))))
-         `(info-title-1 ((,class (:foreground ,bat-heading1 :weight bold :height 1.3))))
-         `(info-title-2 ((,class (:foreground ,bat-heading2 :weight bold :height 1.2))))
-         `(info-title-3 ((,class (:foreground ,bat-heading3 :weight bold :height 1.1))))
+         `(info-title-1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(info-title-2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(info-title-3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
          `(info-title-4 ((,class (:foreground ,bat-heading4 :weight bold))))
          `(info-xref ((,class (:foreground ,bat-blue :underline t))))
          `(info-xref-visited ((,class (:foreground ,bat-lavender :underline t))))
@@ -608,7 +618,7 @@ The light flavor.")
          `(org-date ((,class (:foreground ,bat-sky :underline t))))
          `(org-document-info ((,class (:foreground ,bat-subtext1))))
          `(org-document-info-keyword ((,class (:foreground ,bat-overlay2))))
-         `(org-document-title ((,class (:foreground ,bat-text :weight bold :height 1.4))))
+         `(org-document-title ((,class (:foreground ,bat-text :weight bold :height ,h-doc))))
          `(org-done ((,class (:foreground ,bat-green :weight bold))))
          `(org-drawer ((,class (:foreground ,bat-overlay2))))
          `(org-ellipsis ((,class (:foreground ,bat-overlay2 :underline nil))))
@@ -677,9 +687,9 @@ The light flavor.")
          `(sh-quoted-exec ((,class (:foreground ,bat-peach))))
 
 ;;;;; shr (eww/elfeed HTML rendering)
-         `(shr-h1 ((,class (:foreground ,bat-heading1 :weight bold :height 1.3))))
-         `(shr-h2 ((,class (:foreground ,bat-heading2 :weight bold :height 1.2))))
-         `(shr-h3 ((,class (:foreground ,bat-heading3 :weight bold :height 1.1))))
+         `(shr-h1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(shr-h2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(shr-h3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
          `(shr-h4 ((,class (:foreground ,bat-heading4 :weight bold))))
          `(shr-h5 ((,class (:foreground ,bat-heading5 :weight bold))))
          `(shr-h6 ((,class (:foreground ,bat-heading6 :weight bold))))
@@ -1136,9 +1146,9 @@ The light flavor.")
          `(marginalia-version ((,class (:foreground ,bat-teal))))
 
 ;;;;; markdown-mode
-         `(markdown-header-face-1 ((,class (:foreground ,bat-heading1 :weight bold :height 1.3))))
-         `(markdown-header-face-2 ((,class (:foreground ,bat-heading2 :weight bold :height 1.2))))
-         `(markdown-header-face-3 ((,class (:foreground ,bat-heading3 :weight bold :height 1.1))))
+         `(markdown-header-face-1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(markdown-header-face-2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(markdown-header-face-3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
          `(markdown-header-face-4 ((,class (:foreground ,bat-heading4 :weight bold))))
          `(markdown-header-face-5 ((,class (:foreground ,bat-heading5 :weight bold))))
          `(markdown-header-face-6 ((,class (:foreground ,bat-heading6 :weight bold))))

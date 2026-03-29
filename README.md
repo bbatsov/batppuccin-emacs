@@ -88,12 +88,18 @@ Then load any flavor:
 Override any color across all flavors:
 
 ```elisp
-(setq batppuccin-themes-override-colors-alist
+(setq batppuccin-override-colors-alist
       '(("bat-base" . "#000000")
         ("bat-text" . "#ffffff")))
 ```
 
 The override alist takes precedence over the built-in palette. Color names match the canonical Catppuccin names with a `bat-` prefix (e.g., `bat-rosewater`, `bat-mauve`, `bat-surface0`).
+
+Disable heading scaling if you prefer uniform sizes in org, markdown, shr, and info:
+
+```elisp
+(setq batppuccin-scale-headings nil)
+```
 
 ## License
 
