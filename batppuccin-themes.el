@@ -6,6 +6,7 @@
 ;; URL: https://github.com/bbatsov/batppuccin-emacs
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "27.1"))
+;; Package-Prefix: batppuccin
 ;; Keywords: faces themes
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -68,7 +69,7 @@ replacement hex color string."
 ;; colors for diff backgrounds, heading cycle, and selection that follow
 ;; the Catppuccin style guide recommendations.
 
-(defvar batppuccin-mocha-colors-alist
+(defconst batppuccin-mocha-colors-alist
   '(;; Monochromatic scale (dark -> light)
     ("bat-crust"      . "#11111b")
     ("bat-mantle"     . "#181825")
@@ -116,7 +117,7 @@ replacement hex color string."
   "The Batppuccin (Mocha) color palette.
 The darkest flavor.")
 
-(defvar batppuccin-macchiato-colors-alist
+(defconst batppuccin-macchiato-colors-alist
   '(;; Monochromatic scale
     ("bat-crust"      . "#181926")
     ("bat-mantle"     . "#1e2030")
@@ -148,9 +149,9 @@ The darkest flavor.")
     ("bat-lavender"   . "#b7bdf8")
 
     ;; Derived colors
-    ("bat-diff-add-bg"    . "#1a3a2a")
-    ("bat-diff-del-bg"    . "#3a1a2a")
-    ("bat-diff-chg-bg"    . "#1a2a4a")
+    ("bat-diff-add-bg"    . "#1e3d2e")
+    ("bat-diff-del-bg"    . "#3d1e2e")
+    ("bat-diff-chg-bg"    . "#1e2e4e")
     ("bat-selection"      . "#494d64")
     ("bat-cursor-line"    . "#2a2d42")
 
@@ -164,7 +165,7 @@ The darkest flavor.")
   "The Batppuccin (Macchiato) color palette.
 Dark flavor.")
 
-(defvar batppuccin-frappe-colors-alist
+(defconst batppuccin-frappe-colors-alist
   '(;; Monochromatic scale
     ("bat-crust"      . "#232634")
     ("bat-mantle"     . "#292c3c")
@@ -212,7 +213,7 @@ Dark flavor.")
   "The Batppuccin (Frappe) color palette.
 Medium-dark flavor.")
 
-(defvar batppuccin-latte-colors-alist
+(defconst batppuccin-latte-colors-alist
   '(;; Monochromatic scale (inverted: base is light, crust is darker)
     ("bat-crust"      . "#dce0e8")
     ("bat-mantle"     . "#e6e9ef")
@@ -265,7 +266,7 @@ The light flavor.")
 (defun batppuccin--apply-theme (theme-name colors-alist)
   "Apply the Batppuccin face definitions to THEME-NAME using COLORS-ALIST."
   (let* ((merged (append batppuccin-override-colors-alist colors-alist))
-         (class '((class color) (min-colors 89))))
+         (class '((class color) (min-colors 88))))
     (cl-flet ((c (name) (cdr (assoc name merged))))
       (let ((bat-crust         (c "bat-crust"))
             (bat-mantle        (c "bat-mantle"))
@@ -332,7 +333,7 @@ The light flavor.")
          `(menu ((,class (:foreground ,bat-text :background ,bat-mantle))))
          `(shadow ((,class (:foreground ,bat-overlay1))))
          `(region ((,class (:background ,bat-selection :extend t))))
-         `(secondary-selection ((,class (:background ,bat-surface1))))
+         `(secondary-selection ((,class (:background ,bat-surface1 :extend t))))
          `(trailing-whitespace ((,class (:background ,bat-red))))
          `(vertical-border ((,class (:foreground ,bat-surface1))))
          `(window-divider ((,class (:foreground ,bat-surface1))))
@@ -346,7 +347,6 @@ The light flavor.")
 ;;;;; mode-line
          `(mode-line ((,class (:foreground ,bat-text :background ,bat-mantle
                                            :box (:line-width -1 :color ,bat-surface0)))))
-         `(mode-line-active ((,class (:inherit mode-line))))
          `(mode-line-inactive ((,class (:foreground ,bat-overlay1 :background ,bat-crust
                                                     :box (:line-width -1 :color ,bat-mantle)))))
          `(mode-line-buffer-id ((,class (:foreground ,bat-blue :weight bold))))
@@ -372,16 +372,12 @@ The light flavor.")
          `(ansi-color-bright-white ((,class (:foreground ,bat-subtext1 :background ,bat-subtext1))))
 
 ;;;;; font-lock
-         ;; Follows Catppuccin style guide:
-         ;; keywords=mauve, strings=green, comments=overlay2, constants=peach,
-         ;; operators=sky, functions=blue, builtins=red, types=yellow,
-         ;; properties=blue, macros=rosewater, escape=pink, params=maroon
          `(font-lock-builtin-face ((,class (:foreground ,bat-red))))
          `(font-lock-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
          `(font-lock-comment-delimiter-face ((,class (:foreground ,bat-overlay2 :slant italic))))
          `(font-lock-constant-face ((,class (:foreground ,bat-peach))))
          `(font-lock-doc-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(font-lock-doc-markup-face ((,class (:foreground ,bat-overlay1))))
+         `(font-lock-doc-markup-face ((,class (:foreground ,bat-subtext0))))
          `(font-lock-function-name-face ((,class (:foreground ,bat-blue))))
          `(font-lock-function-call-face ((,class (:foreground ,bat-blue))))
          `(font-lock-keyword-face ((,class (:foreground ,bat-mauve))))
@@ -395,7 +391,7 @@ The light flavor.")
          `(font-lock-type-face ((,class (:foreground ,bat-yellow))))
          `(font-lock-variable-name-face ((,class (:foreground ,bat-flamingo))))
          `(font-lock-variable-use-face ((,class (:foreground ,bat-text))))
-         `(font-lock-warning-face ((,class (:foreground ,bat-yellow :weight bold))))
+         `(font-lock-warning-face ((,class (:inherit warning))))
          `(font-lock-property-name-face ((,class (:foreground ,bat-blue))))
          `(font-lock-property-use-face ((,class (:foreground ,bat-blue))))
          `(font-lock-bracket-face ((,class (:foreground ,bat-overlay2))))
@@ -457,9 +453,9 @@ The light flavor.")
          `(diff-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :extend t))))
          `(diff-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :extend t))))
          `(diff-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :extend t))))
-         `(diff-refine-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold))))
-         `(diff-refine-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold))))
-         `(diff-refine-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold))))
+         `(diff-refine-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold :extend t))))
+         `(diff-refine-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold :extend t))))
+         `(diff-refine-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold :extend t))))
          `(diff-header ((,class (:foreground ,bat-subtext1 :background ,bat-mantle :extend t))))
          `(diff-file-header ((,class (:foreground ,bat-blue :background ,bat-mantle :weight bold :extend t))))
          `(diff-hunk-header ((,class (:foreground ,bat-peach :background ,bat-mantle :extend t))))
@@ -484,15 +480,15 @@ The light flavor.")
          `(ediff-current-diff-A ((,class (:background ,bat-diff-del-bg :extend t))))
          `(ediff-current-diff-B ((,class (:background ,bat-diff-add-bg :extend t))))
          `(ediff-current-diff-C ((,class (:background ,bat-diff-chg-bg :extend t))))
-         `(ediff-fine-diff-A ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold))))
-         `(ediff-fine-diff-B ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold))))
-         `(ediff-fine-diff-C ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold))))
-         `(ediff-even-diff-A ((,class (:background ,bat-surface0))))
-         `(ediff-even-diff-B ((,class (:background ,bat-surface0))))
-         `(ediff-even-diff-C ((,class (:background ,bat-surface0))))
-         `(ediff-odd-diff-A ((,class (:background ,bat-surface0))))
-         `(ediff-odd-diff-B ((,class (:background ,bat-surface0))))
-         `(ediff-odd-diff-C ((,class (:background ,bat-surface0))))
+         `(ediff-fine-diff-A ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold :extend t))))
+         `(ediff-fine-diff-B ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold :extend t))))
+         `(ediff-fine-diff-C ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold :extend t))))
+         `(ediff-even-diff-A ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-even-diff-B ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-even-diff-C ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-odd-diff-A ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-odd-diff-B ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-odd-diff-C ((,class (:background ,bat-surface0 :extend t))))
 
 ;;;;; eshell
          `(eshell-prompt ((,class (:foreground ,bat-blue :weight bold))))
@@ -626,14 +622,14 @@ The light flavor.")
          `(org-formula ((,class (:foreground ,bat-peach))))
          `(org-headline-done ((,class (:foreground ,bat-overlay2))))
          `(org-hide ((,class (:foreground ,bat-base))))
-         `(org-level-1 ((,class (:foreground ,bat-heading1 :weight bold))))
-         `(org-level-2 ((,class (:foreground ,bat-heading2 :weight bold))))
-         `(org-level-3 ((,class (:foreground ,bat-heading3 :weight bold))))
-         `(org-level-4 ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(org-level-5 ((,class (:foreground ,bat-heading5 :weight bold))))
-         `(org-level-6 ((,class (:foreground ,bat-heading6 :weight bold))))
-         `(org-level-7 ((,class (:foreground ,bat-subtext1 :weight bold))))
-         `(org-level-8 ((,class (:foreground ,bat-overlay1 :weight bold))))
+         `(org-level-1 ((,class (:inherit outline-1))))
+         `(org-level-2 ((,class (:inherit outline-2))))
+         `(org-level-3 ((,class (:inherit outline-3))))
+         `(org-level-4 ((,class (:inherit outline-4))))
+         `(org-level-5 ((,class (:inherit outline-5))))
+         `(org-level-6 ((,class (:inherit outline-6))))
+         `(org-level-7 ((,class (:inherit outline-7))))
+         `(org-level-8 ((,class (:inherit outline-8))))
          `(org-link ((,class (:foreground ,bat-blue :underline t))))
          `(org-meta-line ((,class (:foreground ,bat-overlay2))))
          `(org-priority ((,class (:foreground ,bat-peach))))
@@ -713,14 +709,14 @@ The light flavor.")
 
 ;;;;; term / ansi-term / vterm
          `(term ((,class (:foreground ,bat-text :background ,bat-base))))
-         `(term-color-black ((,class (:foreground ,bat-surface1 :background ,bat-surface1))))
-         `(term-color-red ((,class (:foreground ,bat-red :background ,bat-red))))
-         `(term-color-green ((,class (:foreground ,bat-green :background ,bat-green))))
-         `(term-color-yellow ((,class (:foreground ,bat-yellow :background ,bat-yellow))))
-         `(term-color-blue ((,class (:foreground ,bat-blue :background ,bat-blue))))
-         `(term-color-magenta ((,class (:foreground ,bat-pink :background ,bat-pink))))
-         `(term-color-cyan ((,class (:foreground ,bat-teal :background ,bat-teal))))
-         `(term-color-white ((,class (:foreground ,bat-subtext0 :background ,bat-subtext0))))
+         `(term-color-black ((,class (:inherit ansi-color-black))))
+         `(term-color-red ((,class (:inherit ansi-color-red))))
+         `(term-color-green ((,class (:inherit ansi-color-green))))
+         `(term-color-yellow ((,class (:inherit ansi-color-yellow))))
+         `(term-color-blue ((,class (:inherit ansi-color-blue))))
+         `(term-color-magenta ((,class (:inherit ansi-color-magenta))))
+         `(term-color-cyan ((,class (:inherit ansi-color-cyan))))
+         `(term-color-white ((,class (:inherit ansi-color-white))))
 
 ;;;;; whitespace-mode
          `(whitespace-empty ((,class (:foreground ,bat-red :background ,bat-base))))
@@ -830,9 +826,9 @@ The light flavor.")
          `(smerge-markers ((,class (:foreground ,bat-overlay2 :background ,bat-mantle :extend t))))
          `(smerge-upper ((,class (:background ,bat-diff-del-bg :extend t))))
          `(smerge-lower ((,class (:background ,bat-diff-add-bg :extend t))))
-         `(smerge-refined-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold))))
-         `(smerge-refined-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold))))
-         `(smerge-refined-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold))))
+         `(smerge-refined-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold :extend t))))
+         `(smerge-refined-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold :extend t))))
+         `(smerge-refined-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold :extend t))))
 
 ;;;; Third-party packages
 ;;;;; avy
@@ -1171,7 +1167,7 @@ The light flavor.")
          `(markdown-hr-face ((,class (:foreground ,bat-overlay2))))
          `(markdown-html-attr-name-face ((,class (:foreground ,bat-mauve))))
          `(markdown-html-attr-value-face ((,class (:foreground ,bat-green))))
-         `(markdown-html-tag-name-face ((,class (:foreground ,bat-red))))
+         `(markdown-html-tag-name-face ((,class (:foreground ,bat-blue))))
          `(markdown-table-face ((,class (:foreground ,bat-subtext0))))
 
 ;;;;; orderless
@@ -1195,8 +1191,8 @@ The light flavor.")
          `(rainbow-delimiters-base-error-face ((,class (:foreground ,bat-red :weight bold))))
 
 ;;;;; smartparens
-         `(sp-show-pair-match-face ((,class (:foreground ,bat-peach :background ,bat-surface1 :weight bold))))
-         `(sp-show-pair-mismatch-face ((,class (:foreground ,bat-red :background ,bat-base :weight bold :underline t))))
+         `(sp-show-pair-match-face ((,class (:inherit show-paren-match))))
+         `(sp-show-pair-mismatch-face ((,class (:inherit show-paren-mismatch))))
          `(sp-pair-overlay-face ((,class (:background ,bat-surface0))))
          `(sp-show-pair-match-content-face ((,class (:background ,bat-surface0))))
 
@@ -1291,19 +1287,19 @@ The light flavor.")
          `(web-mode-filter-face ((,class (:foreground ,bat-sky))))
          `(web-mode-function-call-face ((,class (:foreground ,bat-blue))))
          `(web-mode-string-face ((,class (:foreground ,bat-green))))
-         `(web-mode-block-string-face ((,class (:foreground ,bat-green))))
-         `(web-mode-part-string-face ((,class (:foreground ,bat-green))))
-         `(web-mode-javascript-string-face ((,class (:foreground ,bat-green))))
-         `(web-mode-css-string-face ((,class (:foreground ,bat-green))))
+         `(web-mode-block-string-face ((,class (:inherit web-mode-string-face))))
+         `(web-mode-part-string-face ((,class (:inherit web-mode-string-face))))
+         `(web-mode-javascript-string-face ((,class (:inherit web-mode-string-face))))
+         `(web-mode-css-string-face ((,class (:inherit web-mode-string-face))))
          `(web-mode-json-key-face ((,class (:foreground ,bat-blue))))
          `(web-mode-json-context-face ((,class (:foreground ,bat-mauve))))
-         `(web-mode-json-string-face ((,class (:foreground ,bat-green))))
+         `(web-mode-json-string-face ((,class (:inherit web-mode-string-face))))
          `(web-mode-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(web-mode-block-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(web-mode-part-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(web-mode-json-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(web-mode-javascript-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(web-mode-css-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
+         `(web-mode-block-comment-face ((,class (:inherit web-mode-comment-face))))
+         `(web-mode-part-comment-face ((,class (:inherit web-mode-comment-face))))
+         `(web-mode-json-comment-face ((,class (:inherit web-mode-comment-face))))
+         `(web-mode-javascript-comment-face ((,class (:inherit web-mode-comment-face))))
+         `(web-mode-css-comment-face ((,class (:inherit web-mode-comment-face))))
          `(web-mode-annotation-face ((,class (:foreground ,bat-overlay2))))
          `(web-mode-annotation-tag-face ((,class (:foreground ,bat-overlay1))))
          `(web-mode-annotation-type-face ((,class (:foreground ,bat-yellow))))
@@ -1315,14 +1311,11 @@ The light flavor.")
          `(web-mode-param-name-face ((,class (:foreground ,bat-maroon))))
          `(web-mode-whitespace-face ((,class (:foreground ,bat-red :background ,bat-diff-del-bg))))
          `(web-mode-inlay-face ((,class (:background ,bat-mantle))))
-         `(web-mode-block-face ((,class (:background ,bat-mantle))))
-         `(web-mode-part-face ((,class (:background ,bat-mantle))))
-         `(web-mode-script-face ((,class (:background ,bat-mantle))))
-         `(web-mode-style-face ((,class (:background ,bat-mantle))))
+         `(web-mode-block-face ((,class (:inherit web-mode-inlay-face))))
+         `(web-mode-part-face ((,class (:inherit web-mode-inlay-face))))
+         `(web-mode-script-face ((,class (:inherit web-mode-inlay-face))))
+         `(web-mode-style-face ((,class (:inherit web-mode-inlay-face))))
          `(web-mode-folded-face ((,class (:foreground ,bat-overlay2 :underline t))))
-         `(web-mode-bold-face ((,class (:weight bold))))
-         `(web-mode-italic-face ((,class (:slant italic))))
-         `(web-mode-underline-face ((,class (:underline t))))
          `(web-mode-current-element-highlight-face ((,class (:background ,bat-surface0))))
          `(web-mode-current-column-highlight-face ((,class (:background ,bat-cursor-line))))
          `(web-mode-comment-keyword-face ((,class (:foreground ,bat-flamingo :weight bold))))
@@ -1336,9 +1329,7 @@ The light flavor.")
          `(which-key-command-description-face ((,class (:foreground ,bat-text))))
          `(which-key-group-description-face ((,class (:foreground ,bat-blue))))
          `(which-key-local-map-description-face ((,class (:foreground ,bat-teal))))
-         `(which-key-special-key-face ((,class (:foreground ,bat-peach :weight bold))))
-
-         )
+         `(which-key-special-key-face ((,class (:foreground ,bat-peach :weight bold)))))
 
         (custom-theme-set-variables
          theme-name
@@ -1349,9 +1340,157 @@ The light flavor.")
             ,bat-blue ,bat-pink ,bat-teal ,bat-subtext0])
 
 ;;;;; pdf-view
-         `(pdf-view-midnight-colors '(,bat-text . ,bat-base))
+         `(pdf-view-midnight-colors '(,bat-text . ,bat-base)))))))
 
-         )))))
+;;; Hooks
+
+(defcustom batppuccin-after-load-hook nil
+  "Hook run after a Batppuccin theme is loaded.
+Each function is called with the theme name (a symbol) as its
+sole argument.  Useful for applying additional customizations
+that depend on theme colors being set."
+  :type 'hook
+  :group 'batppuccin)
+
+;;; Palette API
+
+(defun batppuccin--palette-for (theme)
+  "Return the colors alist for THEME, or nil if unknown."
+  (pcase theme
+    ('batppuccin-mocha     batppuccin-mocha-colors-alist)
+    ('batppuccin-macchiato batppuccin-macchiato-colors-alist)
+    ('batppuccin-frappe    batppuccin-frappe-colors-alist)
+    ('batppuccin-latte     batppuccin-latte-colors-alist)))
+
+(defun batppuccin-get-color (name &optional theme)
+  "Return the hex color value for NAME in the current Batppuccin theme.
+NAME is a string like \"bat-blue\".  If THEME is given, look up
+colors in that variant's palette instead.  User overrides from
+`batppuccin-override-colors-alist' are respected."
+  (let* ((variant (or theme batppuccin--current))
+         (palette (or (batppuccin--palette-for variant)
+                      (error "No Batppuccin theme is active")))
+         (merged (append batppuccin-override-colors-alist palette)))
+    (cdr (assoc name merged))))
+
+;;;###autoload
+(defmacro batppuccin-with-colors (&rest body)
+  "Bind all palette colors for the current Batppuccin theme and evaluate BODY.
+Inside BODY, each palette color is available as a local variable,
+e.g. `bat-blue', `bat-base', etc.
+
+Example:
+  (batppuccin-with-colors
+    (set-face-attribute \\='some-face nil :foreground bat-blue))"
+  (declare (indent 0))
+  `(let* ((--bat-palette
+           (append batppuccin-override-colors-alist
+                   (or (batppuccin--palette-for batppuccin--current)
+                       (error "No Batppuccin theme is active"))))
+          ,@(mapcar (lambda (entry)
+                      `(,(intern (car entry))
+                        (cdr (assoc ,(car entry) --bat-palette))))
+                    batppuccin-mocha-colors-alist))
+     ,@body))
+
+;;; Interactive Palette Viewer
+
+(defun batppuccin-list-colors (&optional theme)
+  "Display all palette colors for the current Batppuccin theme.
+With prefix argument, prompt for THEME variant."
+  (interactive
+   (list (when current-prefix-arg
+           (intern (completing-read "Variant: "
+                                    (mapcar #'symbol-name batppuccin--variants)
+                                    nil t)))))
+  (let* ((variant (or theme batppuccin--current
+                      (error "No Batppuccin theme is active")))
+         (palette (or (batppuccin--palette-for variant)
+                      (error "Unknown theme: %s" variant)))
+         (merged (append batppuccin-override-colors-alist palette))
+         (buf (get-buffer-create (format "*Batppuccin Palette: %s*" variant))))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert (format "Palette for %s\n\n" variant))
+        (dolist (entry merged)
+          (let ((name (car entry))
+                (color (cdr entry)))
+            (insert (format "  %-25s  %s  " name color))
+            (insert (propertize "  sample  "
+                                'face `(:foreground ,color)))
+            (insert (propertize "  sample  "
+                                'face `(:background ,color
+                                        :foreground ,(if (< (batppuccin--relative-luminance color) 0.5)
+                                                         "#ffffff" "#000000"))))
+            (insert "\n")))
+        (goto-char (point-min)))
+      (special-mode))
+    (pop-to-buffer buf)))
+
+(defun batppuccin--relative-luminance (hex)
+  "Return the relative luminance of HEX color string.
+Uses the WCAG 2.0 formula."
+  (let* ((rgb (color-name-to-rgb hex))
+         (r (nth 0 rgb))
+         (g (nth 1 rgb))
+         (b (nth 2 rgb))
+         (adjust (lambda (c)
+                   (if (<= c 0.03928)
+                       (/ c 12.92)
+                     (expt (/ (+ c 0.055) 1.055) 2.4)))))
+    (+ (* 0.2126 (funcall adjust r))
+       (* 0.7152 (funcall adjust g))
+       (* 0.0722 (funcall adjust b)))))
+
+;;; User Commands
+
+(defvar batppuccin--current nil
+  "The currently active Batppuccin theme, or nil.")
+
+(defconst batppuccin--variants
+  '(batppuccin-mocha batppuccin-macchiato batppuccin-frappe batppuccin-latte)
+  "List of all Batppuccin theme variants.")
+
+;;;###autoload
+(defun batppuccin-reload ()
+  "Reload the current Batppuccin theme.
+Useful after changing `batppuccin-override-colors-alist' or
+`batppuccin-scale-headings' without having to call `load-theme'
+manually."
+  (interactive)
+  (if batppuccin--current
+      (progn
+        (load-theme batppuccin--current t)
+        (run-hook-with-args 'batppuccin-after-load-hook batppuccin--current))
+    (user-error "No Batppuccin theme is currently active")))
+
+;;;###autoload
+(defun batppuccin-select ()
+  "Select and load a Batppuccin theme variant interactively."
+  (interactive)
+  (let* ((names (mapcar #'symbol-name batppuccin--variants))
+         (choice (intern (completing-read "Batppuccin theme: " names nil t))))
+    (mapc #'disable-theme batppuccin--variants)
+    (load-theme choice t)
+    (setq batppuccin--current choice)
+    (run-hook-with-args 'batppuccin-after-load-hook choice)))
+
+(defun batppuccin--set-current (theme)
+  "Record THEME as the active Batppuccin theme.
+Called from `enable-theme-functions'."
+  (when (memq theme batppuccin--variants)
+    (setq batppuccin--current theme)))
+
+(defun batppuccin--clear-current (theme)
+  "Clear the active Batppuccin theme if THEME is being disabled.
+Called from `disable-theme-functions'."
+  (when (eq theme batppuccin--current)
+    (setq batppuccin--current nil)))
+
+(when (boundp 'enable-theme-functions)
+  (add-hook 'enable-theme-functions #'batppuccin--set-current)
+  (add-hook 'disable-theme-functions #'batppuccin--clear-current))
 
 (provide 'batppuccin-themes)
 

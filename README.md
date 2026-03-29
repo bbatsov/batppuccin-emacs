@@ -14,7 +14,7 @@ The [official catppuccin/emacs](https://github.com/catppuccin/emacs) port has so
 - Loads color definitions from an external file using `load-file-name`, which is nil in certain `load-theme` code paths (e.g., when Emacs hasn't marked the theme as safe yet). This causes the theme to fail to load entirely for some users.
 - No semantic color layer -- faces reference raw palette colors directly, making it hard to reason about color assignments or adjust them systematically.
 
-I think this is partly because the official Emacs port tries to mimic the structure of the original Neovim version. That works (despite being odd by Emacs standards) and the maintainers seem to like the approach, but it doesn't sit well with me.
+I think this is partly because the official Emacs port uses Catppuccin's [Whiskers](https://github.com/catppuccin/toolbox/tree/main/whiskers) template tool to generate the Elisp from a `.tera` template. That's great for keeping ports in sync across editors, but it means the generated code doesn't follow Emacs conventions. It doesn't sit well with me.
 
 ### Style Guide Deviations
 
@@ -99,6 +99,40 @@ Disable heading scaling if you prefer uniform sizes in org, markdown, shr, and i
 
 ```elisp
 (setq batppuccin-scale-headings nil)
+```
+
+After changing any of these options, run `M-x batppuccin-reload` to apply them without restarting Emacs.
+
+## Interactive Commands
+
+- `M-x batppuccin-select` -- pick a flavor interactively and load it
+- `M-x batppuccin-reload` -- reload the current theme after changing options
+- `M-x batppuccin-list-colors` -- display all palette colors with samples (prefix arg to pick a variant)
+
+## Programmatic Access
+
+If you need to reference theme colors in your own configuration, there are a couple of options.
+
+Look up a single color:
+
+```elisp
+(batppuccin-get-color "bat-blue")
+```
+
+Or bind the entire palette as local variables with `batppuccin-with-colors`:
+
+```elisp
+(batppuccin-with-colors
+  (set-face-attribute 'some-face nil :foreground bat-blue))
+```
+
+You can also hook into theme loads with `batppuccin-after-load-hook` -- each function receives the theme name as its argument:
+
+```elisp
+(add-hook 'batppuccin-after-load-hook
+          (lambda (_theme)
+            (batppuccin-with-colors
+              (set-face-attribute 'my-face nil :foreground bat-teal))))
 ```
 
 ## License
