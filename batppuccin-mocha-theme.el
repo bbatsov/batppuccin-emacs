@@ -3,10 +3,6 @@
 ;; Copyright (C) 2026 Bozhidar Batsov
 
 ;; Author: Bozhidar Batsov <bozhidar@batsov.dev>
-;; URL: https://github.com/bbatsov/batppuccin-emacs
-;; Version: 0.1.0
-;; Package-Requires: ((emacs "27.1"))
-;; Keywords: faces themes
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
