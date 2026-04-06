@@ -20,11 +20,11 @@
 ;;; Commentary:
 
 ;; The "Latte" variant of Batppuccin -- the light flavor.
-;; See `batppuccin-themes.el' for the shared infrastructure.
+;; See `batppuccin.el' for the shared infrastructure.
 
 ;;; Code:
 
-(require 'batppuccin-themes)
+(require 'batppuccin)
 
 (deftheme batppuccin-latte "A soothing pastel light theme.")
 

@@ -20,11 +20,11 @@
 ;;; Commentary:
 
 ;; The "Mocha" variant of Batppuccin -- the darkest flavor.
-;; See `batppuccin-themes.el' for the shared infrastructure.
+;; See `batppuccin.el' for the shared infrastructure.
 
 ;;; Code:
 
-(require 'batppuccin-themes)
+(require 'batppuccin)
 
 (deftheme batppuccin-mocha "A soothing pastel dark theme.")
 

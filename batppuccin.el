@@ -1,4 +1,4 @@
-;;; batppuccin-themes.el --- Shared infrastructure for Batppuccin themes -*- lexical-binding: t; -*-
+;;; batppuccin.el --- Shared infrastructure for Batppuccin themes -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026 Bozhidar Batsov
 
@@ -1491,11 +1491,11 @@ Called from `disable-theme-functions'."
   (add-hook 'enable-theme-functions #'batppuccin--set-current)
   (add-hook 'disable-theme-functions #'batppuccin--clear-current))
 
-(provide 'batppuccin-themes)
+(provide 'batppuccin)
 
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; indent-tabs-mode: nil
 ;; End:
 
-;;; batppuccin-themes.el ends here
+;;; batppuccin.el ends here

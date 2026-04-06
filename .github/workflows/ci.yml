@@ -21,7 +21,7 @@ jobs:
         run: |
           emacs --batch -L . \
             --eval "(setq byte-compile-error-on-warn t)" \
-            -f batch-byte-compile batppuccin-themes.el
+            -f batch-byte-compile batppuccin.el
       - name: Load all themes
         run: |
           emacs --batch -L . \

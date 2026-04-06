@@ -20,11 +20,11 @@
 ;;; Commentary:
 
 ;; The "Macchiato" variant of Batppuccin -- dark flavor.
-;; See `batppuccin-themes.el' for the shared infrastructure.
+;; See `batppuccin.el' for the shared infrastructure.
 
 ;;; Code:
 
-(require 'batppuccin-themes)
+(require 'batppuccin)
 
 (deftheme batppuccin-macchiato "A soothing pastel dark theme.")
 
