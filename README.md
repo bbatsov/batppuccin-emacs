@@ -68,7 +68,7 @@ Then load any flavor:
 ### use-package (with package-vc)
 
 ```elisp
-(use-package batppuccin-mocha-theme
+(use-package batppuccin
   :vc (:url "https://github.com/bbatsov/batppuccin-emacs" :rev :newest)
   :config
   (load-theme 'batppuccin-mocha t))
