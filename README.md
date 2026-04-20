@@ -74,6 +74,14 @@ Then load any flavor:
   (load-theme 'batppuccin-mocha t))
 ```
 
+### straight.el (with use-package integration)
+
+```
+(use-package batppuccin-latte-mocha
+  :straight (:host github :repo "bbatsov/batppuccin-emacs")
+  :config (load-theme 'batppuccin-mocha t))
+```
+
 ## Flavors
 
 | Flavor | Description |
