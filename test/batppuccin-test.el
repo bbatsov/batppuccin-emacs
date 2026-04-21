@@ -163,6 +163,29 @@ frame-side face recomputation (which is unreliable in batch)."
                                  (intern (format "%s-colors-alist" variant)))))))
         (expect bg :to-equal mantle)))))
 
+;;; Package coverage smoke tests
+
+(describe "diredfl face coverage"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v)
+        (disable-theme v))))
+
+  (dolist (variant batppuccin-test--variants)
+    (it (format "defines every diredfl-* face in %s" variant)
+      (batppuccin-test--reload variant)
+      (dolist (face '(diredfl-file-name diredfl-file-suffix
+                      diredfl-compressed-file-name diredfl-compressed-file-suffix
+                      diredfl-ignored-file-name diredfl-deletion-file-name
+                      diredfl-deletion diredfl-dir-heading diredfl-dir-name
+                      diredfl-dir-priv diredfl-symlink diredfl-link-priv
+                      diredfl-executable-tag diredfl-exec-priv diredfl-read-priv
+                      diredfl-write-priv diredfl-no-priv diredfl-other-priv
+                      diredfl-rare-priv diredfl-date-time diredfl-number
+                      diredfl-flag-mark diredfl-flag-mark-line
+                      diredfl-autofile-name diredfl-tagged-autofile-name))
+        (expect (assoc variant (get face 'theme-face)) :not :to-be nil)))))
+
 ;;; Variant loading smoke tests
 
 (describe "theme loading"

@@ -5,6 +5,7 @@
 - Add face for built-in which-func package.
 - Fix `batppuccin-scale-headings` not affecting org-mode and other outline-based headings.
 - Give `markdown-code-face` an explicit background so code blocks no longer pick up a dark fallback when using Latte.
+- Add face coverage for the `diredfl` package.
 
 ## 1.0.0 (2026-04-21)
 
