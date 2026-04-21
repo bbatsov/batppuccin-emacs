@@ -143,6 +143,26 @@ frame-side face recomputation (which is unreliable in batch)."
       (dolist (entry alist)
         (expect (cdr entry) :to-match "\\`#[0-9a-fA-F]\\{6\\}\\'")))))
 
+;;; Code-block backgrounds
+
+(describe "markdown-code-face background"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v)
+        (disable-theme v))))
+
+  ;; Regression for #10: without an explicit :background, code blocks in
+  ;; Latte could end up dark via inheritance / user customization. We
+  ;; anchor the background to bat-mantle in every variant.
+  (dolist (variant batppuccin-test--variants)
+    (it (format "sets an explicit :background in %s" variant)
+      (batppuccin-test--reload variant)
+      (let ((bg (batppuccin-test--face-attr 'markdown-code-face variant :background))
+            (mantle (cdr (assoc "bat-mantle"
+                                (symbol-value
+                                 (intern (format "%s-colors-alist" variant)))))))
+        (expect bg :to-equal mantle)))))
+
 ;;; Variant loading smoke tests
 
 (describe "theme loading"
