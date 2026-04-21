@@ -87,6 +87,23 @@ Or with `use-package`:
   (load-theme 'batppuccin-mocha t))
 ```
 
+
+### straight.el
+
+```elisp
+(straight-use-package
+ '(batppuccin-latte-mocha :host github :repo "bbatsov/batppuccin-emacs"))
+(load-theme 'batppuccin-mocha t)
+```
+
+Or with `use-package` integration.
+
+```elisp
+(use-package batppuccin-mocha
+  :straight (:host github :repo "bbatsov/batppuccin-emacs")
+  :config (load-theme 'batppuccin-mocha t))
+```
+
 ### From source
 
 Clone the repo and add it to your load path:
