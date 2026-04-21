@@ -12,9 +12,11 @@
 # Emacs directory-local variables
 .dir-locals-2.el
 
-# Cask / Eask
+# Cask / Eask / Eldev
 .cask/
 dist/
+.eldev/
+*-autoloads.el
 
 # Claude Code
 .claude/

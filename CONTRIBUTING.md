@@ -28,6 +28,8 @@ request. Please, try to follow these guidelines when you do so.
   by role (e.g. functions → blue, keywords → mauve, strings → green) and
   mention your reasoning in the PR.
 * Verify your Emacs Lisp code with `checkdoc` (<kbd>C-c ? d</kbd>).
+* Run the test suite with `eldev buttercup` and, where practical, add a
+  test for the behavior you're changing.
 * Add a before/after screenshot illustrating visually your changes.
 * Open a [pull request][4] that relates to *only* one subject with a clear title
   and description in grammatically correct, complete sentences.
