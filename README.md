@@ -186,8 +186,7 @@ day or your OS appearance setting:
 ```elisp
 (use-package auto-dark
   :config
-  (setq auto-dark-dark-theme 'batppuccin-mocha
-        auto-dark-light-theme 'batppuccin-latte)
+  (setq auto-dark-themes '((batppuccin-mocha) (batppuccin-latte)))
   (auto-dark-mode 1))
 ```
 
