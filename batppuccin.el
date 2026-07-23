@@ -1133,6 +1133,17 @@ The light flavor.")
          `(ivy-remote ((,class (:foreground ,bat-mauve))))
          `(ivy-virtual ((,class (:foreground ,bat-overlay2))))
 
+;;;;; jinx
+         `(jinx-misspelled ((,class (:underline (:style wave :color ,bat-red)))))
+         `(jinx-highlight ((,class (:foreground ,bat-base :background ,bat-red :weight bold))))
+         `(jinx-save ((,class (:foreground ,bat-peach :weight bold))))
+         `(jinx-key ((,class (:foreground ,bat-mauve :weight bold))))
+         `(jinx-annotation ((,class (:foreground ,bat-overlay2))))
+
+;;;;; keycast
+         `(keycast-key ((,class (:foreground ,bat-base :background ,bat-mauve :weight bold))))
+         `(keycast-command ((,class (:weight bold))))
+
 ;;;;; lsp-mode
          `(lsp-face-highlight-textual ((,class (:background ,bat-surface0))))
          `(lsp-face-highlight-read ((,class (:background ,bat-surface0))))
