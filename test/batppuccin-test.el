@@ -186,6 +186,25 @@ frame-side face recomputation (which is unreliable in batch)."
                       diredfl-autofile-name diredfl-tagged-autofile-name))
         (expect (assoc variant (get face 'theme-face)) :not :to-be nil)))))
 
+(defconst batppuccin-test--package-faces
+  '((anzu anzu-mode-line anzu-match-1 anzu-match-2 anzu-match-3
+          anzu-replace-highlight anzu-replace-to))
+  "Alist of (PACKAGE . FACES) the theme is expected to cover.")
+
+(describe "package face coverage"
+  (before-all
+    (batppuccin-test--reload 'batppuccin-mocha))
+  (after-all
+    (disable-theme 'batppuccin-mocha))
+
+  (dolist (entry batppuccin-test--package-faces)
+    (let ((package (car entry))
+          (faces (cdr entry)))
+      (it (format "themes %s" package)
+        (dolist (face faces)
+          (expect (assq 'batppuccin-mocha (get face 'theme-face))
+                  :to-be-truthy))))))
+
 ;;; Variant loading smoke tests
 
 (describe "theme loading"

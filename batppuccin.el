@@ -963,6 +963,15 @@ The light flavor.")
          `(evil-ex-substitute-matches ((,class (:foreground ,bat-text :background ,bat-surface1))))
          `(evil-ex-substitute-replacement ((,class (:foreground ,bat-peach :underline t :weight bold))))
 
+;;;;; anzu
+         `(anzu-mode-line ((,class (:foreground ,bat-sky :weight bold))))
+         `(anzu-mode-line-no-match ((,class (:foreground ,bat-red :weight bold))))
+         `(anzu-match-1 ((,class (:foreground ,bat-base :background ,bat-blue))))
+         `(anzu-match-2 ((,class (:foreground ,bat-base :background ,bat-teal))))
+         `(anzu-match-3 ((,class (:foreground ,bat-base :background ,bat-peach))))
+         `(anzu-replace-highlight ((,class (:foreground ,bat-text :background ,bat-surface1))))
+         `(anzu-replace-to ((,class (:foreground ,bat-peach :underline t :weight bold))))
+
 ;;;;; avy
          `(avy-lead-face ((,class (:foreground ,bat-base :background ,bat-red :weight bold))))
          `(avy-lead-face-0 ((,class (:foreground ,bat-base :background ,bat-blue :weight bold))))
