@@ -83,6 +83,12 @@ frame-side face recomputation (which is unreliable in batch)."
       (expect (batppuccin-test--face-attr 'shr-h2 'batppuccin-mocha :height) :to-equal 1.2)
       (expect (batppuccin-test--face-attr 'shr-h3 'batppuccin-mocha :height) :to-equal 1.1))
 
+    (it "scales asciidoc titles"
+      (expect (batppuccin-test--face-attr 'asciidoc-document-title-face 'batppuccin-mocha :height) :to-equal 1.4)
+      (expect (batppuccin-test--face-attr 'asciidoc-title-1-face 'batppuccin-mocha :height) :to-equal 1.3)
+      (expect (batppuccin-test--face-attr 'asciidoc-title-2-face 'batppuccin-mocha :height) :to-equal 1.2)
+      (expect (batppuccin-test--face-attr 'asciidoc-title-3-face 'batppuccin-mocha :height) :to-equal 1.1))
+
     (it "does not set :height on org-level-N (org inherits via outline)"
       ;; We leave org-level-N as a plain :inherit so that outline scaling
       ;; flows through. Setting :height directly would override the
@@ -194,7 +200,18 @@ frame-side face recomputation (which is unreliable in batch)."
     (completion-preview completion-preview completion-preview-common
                         completion-preview-exact)
     (dictionary dictionary-word-entry-face dictionary-word-definition-face
-                dictionary-reference-face dictionary-button-face))
+                dictionary-reference-face dictionary-button-face)
+    (asciidoc-mode asciidoc-document-title-face asciidoc-title-1-face
+                   asciidoc-title-5-face asciidoc-markup-face
+                   asciidoc-code-face asciidoc-link-face asciidoc-url-face
+                   asciidoc-metadata-key-face asciidoc-highlight-face
+                   asciidoc-admonition-note-label-face
+                   asciidoc-admonition-note-face
+                   asciidoc-admonition-tip-label-face
+                   asciidoc-admonition-important-label-face
+                   asciidoc-admonition-caution-label-face
+                   asciidoc-admonition-warning-label-face
+                   asciidoc-admonition-warning-face))
   "Alist of (PACKAGE . FACES) the theme is expected to cover.")
 
 (describe "package face coverage"
