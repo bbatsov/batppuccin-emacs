@@ -190,7 +190,11 @@ frame-side face recomputation (which is unreliable in batch)."
   '((anzu anzu-mode-line anzu-match-1 anzu-match-2 anzu-match-3
           anzu-replace-highlight anzu-replace-to)
     (jinx jinx-misspelled jinx-highlight jinx-save jinx-key jinx-annotation)
-    (keycast keycast-key keycast-command))
+    (keycast keycast-key keycast-command)
+    (completion-preview completion-preview completion-preview-common
+                        completion-preview-exact)
+    (dictionary dictionary-word-entry-face dictionary-word-definition-face
+                dictionary-reference-face dictionary-button-face))
   "Alist of (PACKAGE . FACES) the theme is expected to cover.")
 
 (describe "package face coverage"
