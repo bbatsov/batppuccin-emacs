@@ -222,7 +222,22 @@ frame-side face recomputation (which is unreliable in batch)."
            vundo-saved vundo-last-saved vundo-diff-highlight)
     (easy-kill easy-kill-selection easy-kill-origin)
     (copilot copilot-overlay-face)
-    (mistty mistty-fringe-face))
+    (mistty mistty-fringe-face)
+    (clojure-mode clojure-keyword-face clojure-character-face
+                  clojure-discard-face)
+    (git-timemachine git-timemachine-commit
+                     git-timemachine-minibuffer-author-face
+                     git-timemachine-minibuffer-detail-face)
+    (haskell-mode haskell-keyword-face haskell-type-face
+                  haskell-constructor-face haskell-definition-face
+                  haskell-operator-face haskell-pragma-face
+                  haskell-hole-face haskell-error-face haskell-warning-face
+                  haskell-interactive-face-prompt
+                  haskell-interactive-face-compile-error
+                  haskell-interactive-face-result)
+    (erlang erlang-font-lock-exported-function-name-face
+            erlang-edoc-heading erlang-edoc-tag erlang-edoc-macro
+            erlang-edoc-verbatim erlang-edoc-todo))
   "Alist of (PACKAGE . FACES) the theme is expected to cover.")
 
 (describe "package face coverage"

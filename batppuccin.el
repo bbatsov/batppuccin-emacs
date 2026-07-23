@@ -991,6 +991,11 @@ The light flavor.")
          `(avy-background-face ((,class (:foreground ,bat-overlay2))))
          `(avy-goto-char-timer-face ((,class (:foreground ,bat-base :background ,bat-red))))
 
+;;;;; clojure-mode
+         `(clojure-keyword-face ((,class (:foreground ,bat-teal))))
+         `(clojure-character-face ((,class (:foreground ,bat-green))))
+         `(clojure-discard-face ((,class (:foreground ,bat-overlay2 :slant italic))))
+
 ;;;;; cider
          `(cider-result-overlay-face ((,class (:foreground ,bat-green :background ,bat-mantle
                                                            :box (:line-width -1 :color ,bat-surface0)))))
@@ -1130,6 +1135,14 @@ The light flavor.")
          `(flycheck-fringe-warning ((,class (:foreground ,bat-yellow))))
          `(flycheck-fringe-info ((,class (:foreground ,bat-teal))))
 
+;;;;; erlang
+         `(erlang-font-lock-exported-function-name-face ((,class (:foreground ,bat-blue :weight bold))))
+         `(erlang-edoc-heading ((,class (:foreground ,bat-mauve :weight bold))))
+         `(erlang-edoc-tag ((,class (:foreground ,bat-subtext0))))
+         `(erlang-edoc-macro ((,class (:foreground ,bat-pink))))
+         `(erlang-edoc-verbatim ((,class (:foreground ,bat-teal))))
+         `(erlang-edoc-todo ((,class (:foreground ,bat-maroon :weight bold))))
+
 ;;;;; forge
          `(forge-topic-open ((,class (:foreground ,bat-green))))
          `(forge-topic-closed ((,class (:foreground ,bat-overlay2))))
@@ -1147,6 +1160,30 @@ The light flavor.")
          `(forge-suffix-active ((,class (:foreground ,bat-green :weight bold))))
          `(forge-suffix-active-and-implied ((,class (:foreground ,bat-green))))
          `(forge-suffix-implied ((,class (:foreground ,bat-overlay1))))
+
+;;;;; git-timemachine
+         `(git-timemachine-commit ((,class (:foreground ,bat-peach :weight bold))))
+         `(git-timemachine-minibuffer-author-face ((,class (:foreground ,bat-blue))))
+         `(git-timemachine-minibuffer-detail-face ((,class (:foreground ,bat-sky))))
+
+;;;;; haskell-mode
+         `(haskell-keyword-face ((,class (:foreground ,bat-mauve))))
+         `(haskell-type-face ((,class (:foreground ,bat-yellow))))
+         `(haskell-constructor-face ((,class (:foreground ,bat-yellow))))
+         `(haskell-definition-face ((,class (:foreground ,bat-blue))))
+         `(haskell-operator-face ((,class (:foreground ,bat-sky))))
+         `(haskell-pragma-face ((,class (:foreground ,bat-pink))))
+         `(haskell-quasi-quote-face ((,class (:foreground ,bat-green))))
+         `(haskell-literate-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
+         `(haskell-hole-face ((,class (:foreground ,bat-yellow :weight bold))))
+         `(haskell-error-face ((,class (:underline (:style wave :color ,bat-red)))))
+         `(haskell-warning-face ((,class (:underline (:style wave :color ,bat-yellow)))))
+         `(haskell-interactive-face-prompt ((,class (:foreground ,bat-blue :weight bold))))
+         `(haskell-interactive-face-prompt-cont ((,class (:foreground ,bat-sapphire))))
+         `(haskell-interactive-face-compile-error ((,class (:foreground ,bat-red :weight bold))))
+         `(haskell-interactive-face-compile-warning ((,class (:foreground ,bat-yellow :weight bold))))
+         `(haskell-interactive-face-result ((,class (:foreground ,bat-green))))
+         `(haskell-interactive-face-garbage ((,class (:foreground ,bat-overlay1))))
 
 ;;;;; hydra
          `(hydra-face-red ((,class (:foreground ,bat-red :weight bold))))
