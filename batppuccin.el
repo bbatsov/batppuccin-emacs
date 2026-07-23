@@ -1070,6 +1070,9 @@ The light flavor.")
          `(corfu-deprecated ((,class (:foreground ,bat-overlay2 :strike-through t))))
          `(corfu-popupinfo ((,class (:foreground ,bat-text :background ,bat-mantle))))
 
+;;;;; copilot
+         `(copilot-overlay-face ((,class (:foreground ,bat-overlay1 :slant italic))))
+
 ;;;;; doom-modeline
          `(doom-modeline-bar ((,class (:background ,bat-blue))))
          `(doom-modeline-bar-inactive ((,class (:background ,bat-surface0))))
@@ -1111,6 +1114,10 @@ The light flavor.")
          `(embark-keybinding ((,class (:foreground ,bat-mauve :weight bold))))
          `(embark-collect-marked ((,class (:foreground ,bat-base :background ,bat-mauve))))
          `(embark-collect-zebra-highlight ((,class (:background ,bat-surface0))))
+
+;;;;; easy-kill
+         `(easy-kill-selection ((,class (:background ,bat-selection :extend t))))
+         `(easy-kill-origin ((,class (:foreground ,bat-base :background ,bat-red))))
 
 ;;;;; flycheck
          `(flycheck-error ((,class (:underline (:style wave :color ,bat-red)))))
@@ -1386,6 +1393,9 @@ The light flavor.")
          `(markdown-html-attr-value-face ((,class (:foreground ,bat-green))))
          `(markdown-html-tag-name-face ((,class (:foreground ,bat-blue))))
          `(markdown-table-face ((,class (:foreground ,bat-subtext0))))
+
+;;;;; mistty
+         `(mistty-fringe-face ((,class (:foreground ,bat-overlay0))))
 
 ;;;;; orderless
          `(orderless-match-face-0 ((,class (:foreground ,bat-blue :weight bold))))
@@ -1669,6 +1679,18 @@ The light flavor.")
          `(undo-tree-visualizer-default-face ((,class (:foreground ,bat-overlay2))))
          `(undo-tree-visualizer-register-face ((,class (:foreground ,bat-yellow))))
          `(undo-tree-visualizer-unmodified-face ((,class (:foreground ,bat-teal))))
+
+;;;;; volatile-highlights
+         `(vhl/default-face ((,class (:background ,bat-surface1))))
+
+;;;;; vundo
+         `(vundo-node ((,class (:foreground ,bat-overlay1))))
+         `(vundo-stem ((,class (:foreground ,bat-surface2))))
+         `(vundo-branch-stem ((,class (:foreground ,bat-overlay0))))
+         `(vundo-highlight ((,class (:foreground ,bat-blue :weight bold))))
+         `(vundo-saved ((,class (:foreground ,bat-green))))
+         `(vundo-last-saved ((,class (:foreground ,bat-green :weight bold))))
+         `(vundo-diff-highlight ((,class (:foreground ,bat-peach :weight bold))))
 
 ;;;;; wgrep
          `(wgrep-face ((,class (:foreground ,bat-green :background ,bat-diff-add-bg))))
