@@ -1017,6 +1017,20 @@ The light flavor.")
          `(cider-test-failure-face ((,class (:foreground ,bat-red :weight bold))))
          `(cider-test-success-face ((,class (:foreground ,bat-green :weight bold))))
          `(cider-traced-face ((,class (:background ,bat-diff-chg-bg))))
+         `(cider-repl-result-face ((,class (:foreground ,bat-teal))))
+         `(cider-fringe-bad-face ((,class (:foreground ,bat-red))))
+         `(cider-fringe-stale-face ((,class (:foreground ,bat-yellow))))
+         `(cider-reader-conditional-face ((,class (:foreground ,bat-subtext0))))
+         `(cider-debug-prompt-face ((,class (:foreground ,bat-mauve :weight bold))))
+;;;;;; nrepl (message log)
+         `(nrepl-message-1-face ((,class (:foreground ,bat-red))))
+         `(nrepl-message-2-face ((,class (:foreground ,bat-peach))))
+         `(nrepl-message-3-face ((,class (:foreground ,bat-yellow))))
+         `(nrepl-message-4-face ((,class (:foreground ,bat-green))))
+         `(nrepl-message-5-face ((,class (:foreground ,bat-teal))))
+         `(nrepl-message-6-face ((,class (:foreground ,bat-sapphire))))
+         `(nrepl-message-7-face ((,class (:foreground ,bat-blue))))
+         `(nrepl-message-8-face ((,class (:foreground ,bat-lavender))))
 
 ;;;;; company
          `(company-tooltip ((,class (:foreground ,bat-text :background ,bat-mantle))))
@@ -1054,6 +1068,7 @@ The light flavor.")
          `(corfu-border ((,class (:background ,bat-surface0))))
          `(corfu-annotations ((,class (:foreground ,bat-overlay2))))
          `(corfu-deprecated ((,class (:foreground ,bat-overlay2 :strike-through t))))
+         `(corfu-popupinfo ((,class (:foreground ,bat-text :background ,bat-mantle))))
 
 ;;;;; doom-modeline
          `(doom-modeline-bar ((,class (:background ,bat-blue))))
@@ -1132,6 +1147,10 @@ The light flavor.")
          `(hydra-face-amaranth ((,class (:foreground ,bat-peach :weight bold))))
          `(hydra-face-pink ((,class (:foreground ,bat-pink :weight bold))))
          `(hydra-face-teal ((,class (:foreground ,bat-teal :weight bold))))
+
+;;;;; inf-ruby
+         `(inf-ruby-result-overlay-face ((,class (:foreground ,bat-green :background ,bat-mantle
+                                                              :box (:line-width -1 :color ,bat-surface0)))))
 
 ;;;;; ivy
          `(ivy-current-match ((,class (:foreground ,bat-text :background ,bat-surface1 :weight bold))))
