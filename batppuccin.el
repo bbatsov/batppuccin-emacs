@@ -876,6 +876,17 @@ The light flavor.")
          `(holiday ((,class (:foreground ,bat-peach))))
          `(diary ((,class (:foreground ,bat-yellow))))
 
+;;;;; completion-preview
+         `(completion-preview ((,class (:foreground ,bat-overlay1))))
+         `(completion-preview-common ((,class (:foreground ,bat-overlay2))))
+         `(completion-preview-exact ((,class (:foreground ,bat-overlay2 :underline t))))
+
+;;;;; dictionary
+         `(dictionary-word-entry-face ((,class (:foreground ,bat-blue :weight bold))))
+         `(dictionary-word-definition-face ((,class (:foreground ,bat-text))))
+         `(dictionary-reference-face ((,class (:foreground ,bat-sapphire :underline t))))
+         `(dictionary-button-face ((,class (:foreground ,bat-blue :underline t :weight bold))))
+
 ;;;;; eglot
          `(eglot-highlight-symbol-face ((,class (:background ,bat-surface0 :weight bold))))
          `(eglot-diagnostic-tag-unnecessary-face ((,class (:foreground ,bat-overlay2 :underline (:style wave :color ,bat-overlay1)))))
