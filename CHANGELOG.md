@@ -2,8 +2,8 @@
 
 ## main (unreleased)
 
-- Add face support for breadcrumb.
-- Add face support for gptel.
+- [#19](https://github.com/bbatsov/batppuccin-emacs/pull/19): Add face support for breadcrumb.
+- [#19](https://github.com/bbatsov/batppuccin-emacs/pull/19): Add face support for gptel.
 - [#18](https://github.com/bbatsov/batppuccin-emacs/pull/18): Expand face coverage to anzu, jinx, completion-preview, dictionary, asciidoc-mode, vundo, volatile-highlights, easy-kill, clojure-mode, copilot, git-timemachine, haskell-mode, keycast, mistty, erlang and inf-ruby.
 - [#18](https://github.com/bbatsov/batppuccin-emacs/pull/18): Round out the cider section (eval result, fringe states, debug prompt) and add the nREPL message log and `corfu-popupinfo` faces.
 - Add face for built-in which-func package.
