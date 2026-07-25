@@ -241,7 +241,10 @@ frame-side face recomputation (which is unreliable in batch)."
     (breadcrumb breadcrumb-face breadcrumb-imenu-leaf-face
                 breadcrumb-imenu-crumbs-face breadcrumb-imenu-base-face
                 breadcrumb-project-leaf-face breadcrumb-project-crumbs-face
-                breadcrumb-project-base-face))
+                breadcrumb-project-base-face)
+    (gptel gptel-context-highlight-face gptel-context-deletion-face
+           gptel-rewrite-highlight-face gptel-response-highlight
+           gptel-response-fringe-highlight))
   "Alist of (PACKAGE . FACES) the theme is expected to cover.")
 
 (describe "package face coverage"
