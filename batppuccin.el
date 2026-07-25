@@ -991,6 +991,15 @@ The light flavor.")
          `(avy-background-face ((,class (:foreground ,bat-overlay2))))
          `(avy-goto-char-timer-face ((,class (:foreground ,bat-base :background ,bat-red))))
 
+;;;;; breadcrumb
+         `(breadcrumb-face ((,class (:foreground ,bat-overlay2))))
+         `(breadcrumb-imenu-leaf-face ((,class (:foreground ,bat-blue :weight bold))))
+         `(breadcrumb-imenu-crumbs-face ((,class (:foreground ,bat-overlay2))))
+         `(breadcrumb-imenu-base-face ((,class (:foreground ,bat-overlay2 :weight bold))))
+         `(breadcrumb-project-leaf-face ((,class (:foreground ,bat-text :weight bold))))
+         `(breadcrumb-project-crumbs-face ((,class (:foreground ,bat-overlay2))))
+         `(breadcrumb-project-base-face ((,class (:foreground ,bat-overlay2 :weight bold))))
+
 ;;;;; clojure-mode
          `(clojure-keyword-face ((,class (:foreground ,bat-teal))))
          `(clojure-character-face ((,class (:foreground ,bat-green))))
