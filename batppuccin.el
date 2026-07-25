@@ -1175,6 +1175,13 @@ The light flavor.")
          `(git-timemachine-minibuffer-author-face ((,class (:foreground ,bat-blue))))
          `(git-timemachine-minibuffer-detail-face ((,class (:foreground ,bat-sky))))
 
+;;;;; gptel
+         `(gptel-context-highlight-face ((,class (:background ,bat-surface0 :extend t))))
+         `(gptel-context-deletion-face ((,class (:background ,bat-diff-del-bg :extend t))))
+         `(gptel-rewrite-highlight-face ((,class (:background ,bat-diff-chg-bg :extend t))))
+         `(gptel-response-highlight ((,class (:background ,bat-mantle :extend t))))
+         `(gptel-response-fringe-highlight ((,class (:foreground ,bat-blue))))
+
 ;;;;; haskell-mode
          `(haskell-keyword-face ((,class (:foreground ,bat-mauve))))
          `(haskell-type-face ((,class (:foreground ,bat-yellow))))
