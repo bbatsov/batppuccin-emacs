@@ -1,6 +1,6 @@
 # Changelog
 
-## main (unreleased)
+## 1.1.0 (2026-07-26)
 
 - [#19](https://github.com/bbatsov/batppuccin-emacs/pull/19): Add face support for breadcrumb.
 - [#19](https://github.com/bbatsov/batppuccin-emacs/pull/19): Add face support for gptel.
