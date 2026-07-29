@@ -46,7 +46,55 @@
 
 (defcustom batppuccin-scale-headings t
   "Whether to scale headings in org, outline, markdown, shr, and info.
-Set to nil for uniform heading sizes.  Takes effect on theme load."
+Set to nil for uniform heading sizes.  The individual scale factors
+are controlled by `batppuccin-height-doc-title' and
+`batppuccin-height-1' through `batppuccin-height-3'.  Takes effect on
+theme load."
+  :type 'boolean
+  :group 'batppuccin)
+
+(defcustom batppuccin-height-doc-title 1.4
+  "Height multiplier for document titles (e.g. `org-document-title').
+Only takes effect when `batppuccin-scale-headings' is non-nil."
+  :type 'number
+  :group 'batppuccin)
+
+(defcustom batppuccin-height-1 1.3
+  "Height multiplier for level-1 headings.
+Only takes effect when `batppuccin-scale-headings' is non-nil."
+  :type 'number
+  :group 'batppuccin)
+
+(defcustom batppuccin-height-2 1.2
+  "Height multiplier for level-2 headings.
+Only takes effect when `batppuccin-scale-headings' is non-nil."
+  :type 'number
+  :group 'batppuccin)
+
+(defcustom batppuccin-height-3 1.1
+  "Height multiplier for level-3 headings.
+Only takes effect when `batppuccin-scale-headings' is non-nil."
+  :type 'number
+  :group 'batppuccin)
+
+(defcustom batppuccin-italic-comments t
+  "Whether to render comments in italic.
+Set to nil if your font renders italics poorly.  Takes effect on
+theme load."
+  :type 'boolean
+  :group 'batppuccin)
+
+(defcustom batppuccin-flat-mode-line nil
+  "Whether to render the mode line without its surrounding box.
+When non-nil the mode line is flat (borderless), relying on the
+background alone for separation.  Takes effect on theme load."
+  :type 'boolean
+  :group 'batppuccin)
+
+(defcustom batppuccin-use-variable-pitch nil
+  "Whether to render headings in a variable-pitch (proportional) font.
+Applies to headings in org, outline, markdown, adoc, asciidoc, shr,
+info and LaTeX.  Takes effect on theme load."
   :type 'boolean
   :group 'batppuccin)
 
@@ -304,10 +352,16 @@ The light flavor.")
             (bat-heading4      (c "bat-heading4"))
             (bat-heading5      (c "bat-heading5"))
             (bat-heading6      (c "bat-heading6"))
-            (h1 (if batppuccin-scale-headings 1.3 1.0))
-            (h2 (if batppuccin-scale-headings 1.2 1.0))
-            (h3 (if batppuccin-scale-headings 1.1 1.0))
-            (h-doc (if batppuccin-scale-headings 1.4 1.0)))
+            (h1 (if batppuccin-scale-headings batppuccin-height-1 1.0))
+            (h2 (if batppuccin-scale-headings batppuccin-height-2 1.0))
+            (h3 (if batppuccin-scale-headings batppuccin-height-3 1.0))
+            (h-doc (if batppuccin-scale-headings batppuccin-height-doc-title 1.0))
+            (comment-slant (if batppuccin-italic-comments 'italic 'normal))
+            (ml-box (unless batppuccin-flat-mode-line
+                      (list :line-width -1 :color (c "bat-surface0"))))
+            (ml-box-inactive (unless batppuccin-flat-mode-line
+                               (list :line-width -1 :color (c "bat-mantle"))))
+            (vpitch (if batppuccin-use-variable-pitch 'variable-pitch 'default)))
 
         (custom-theme-set-faces
          theme-name
@@ -346,9 +400,9 @@ The light flavor.")
 
 ;;;;; mode-line
          `(mode-line ((,class (:foreground ,bat-text :background ,bat-mantle
-                                           :box (:line-width -1 :color ,bat-surface0)))))
+                                           :box ,ml-box))))
          `(mode-line-inactive ((,class (:foreground ,bat-overlay1 :background ,bat-crust
-                                                    :box (:line-width -1 :color ,bat-mantle)))))
+                                                    :box ,ml-box-inactive))))
          `(mode-line-buffer-id ((,class (:foreground ,bat-blue :weight bold))))
          `(mode-line-emphasis ((,class (:foreground ,bat-text :weight bold))))
          `(mode-line-highlight ((,class (:foreground ,bat-mauve))))
@@ -373,10 +427,10 @@ The light flavor.")
 
 ;;;;; font-lock
          `(font-lock-builtin-face ((,class (:foreground ,bat-red))))
-         `(font-lock-comment-face ((,class (:foreground ,bat-overlay2 :slant italic))))
-         `(font-lock-comment-delimiter-face ((,class (:foreground ,bat-overlay2 :slant italic))))
+         `(font-lock-comment-face ((,class (:foreground ,bat-overlay2 :slant ,comment-slant))))
+         `(font-lock-comment-delimiter-face ((,class (:foreground ,bat-overlay2 :slant ,comment-slant))))
          `(font-lock-constant-face ((,class (:foreground ,bat-peach))))
-         `(font-lock-doc-face ((,class (:foreground ,bat-overlay2 :slant italic))))
+         `(font-lock-doc-face ((,class (:foreground ,bat-overlay2 :slant ,comment-slant))))
          `(font-lock-doc-markup-face ((,class (:foreground ,bat-subtext0))))
          `(font-lock-function-name-face ((,class (:foreground ,bat-blue))))
          `(font-lock-function-call-face ((,class (:foreground ,bat-blue))))
@@ -627,10 +681,10 @@ The light flavor.")
          `(info-menu-header ((,class (:foreground ,bat-text :weight bold))))
          `(info-menu-star ((,class (:foreground ,bat-red))))
          `(info-node ((,class (:foreground ,bat-blue :weight bold))))
-         `(info-title-1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
-         `(info-title-2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
-         `(info-title-3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
-         `(info-title-4 ((,class (:foreground ,bat-heading4 :weight bold))))
+         `(info-title-1 ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(info-title-2 ((,class (:inherit ,vpitch :foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(info-title-3 ((,class (:inherit ,vpitch :foreground ,bat-heading3 :weight bold :height ,h3))))
+         `(info-title-4 ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
          `(info-xref ((,class (:foreground ,bat-blue :underline t))))
          `(info-xref-visited ((,class (:foreground ,bat-lavender :underline t))))
 
@@ -738,7 +792,7 @@ The light flavor.")
          `(org-date ((,class (:foreground ,bat-sky :underline t))))
          `(org-document-info ((,class (:foreground ,bat-subtext1))))
          `(org-document-info-keyword ((,class (:foreground ,bat-overlay2))))
-         `(org-document-title ((,class (:foreground ,bat-text :weight bold :height ,h-doc))))
+         `(org-document-title ((,class (:inherit ,vpitch :foreground ,bat-text :weight bold :height ,h-doc))))
          `(org-done ((,class (:foreground ,bat-green :weight bold))))
          `(org-drawer ((,class (:foreground ,bat-overlay2))))
          `(org-ellipsis ((,class (:foreground ,bat-overlay2 :underline nil))))
@@ -781,14 +835,14 @@ The light flavor.")
          `(org-agenda-current-time ((,class (:foreground ,bat-sky))))
 
 ;;;;; outline
-         `(outline-1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
-         `(outline-2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
-         `(outline-3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
-         `(outline-4 ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(outline-5 ((,class (:foreground ,bat-heading5 :weight bold))))
-         `(outline-6 ((,class (:foreground ,bat-heading6 :weight bold))))
-         `(outline-7 ((,class (:foreground ,bat-subtext1 :weight bold))))
-         `(outline-8 ((,class (:foreground ,bat-overlay1 :weight bold))))
+         `(outline-1 ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(outline-2 ((,class (:inherit ,vpitch :foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(outline-3 ((,class (:inherit ,vpitch :foreground ,bat-heading3 :weight bold :height ,h3))))
+         `(outline-4 ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
+         `(outline-5 ((,class (:inherit ,vpitch :foreground ,bat-heading5 :weight bold))))
+         `(outline-6 ((,class (:inherit ,vpitch :foreground ,bat-heading6 :weight bold))))
+         `(outline-7 ((,class (:inherit ,vpitch :foreground ,bat-subtext1 :weight bold))))
+         `(outline-8 ((,class (:inherit ,vpitch :foreground ,bat-overlay1 :weight bold))))
 
 ;;;;; re-builder
          `(reb-match-0 ((,class (:foreground ,bat-base :background ,bat-blue))))
@@ -807,12 +861,12 @@ The light flavor.")
          `(sh-quoted-exec ((,class (:foreground ,bat-peach))))
 
 ;;;;; shr (eww/elfeed HTML rendering)
-         `(shr-h1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
-         `(shr-h2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
-         `(shr-h3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
-         `(shr-h4 ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(shr-h5 ((,class (:foreground ,bat-heading5 :weight bold))))
-         `(shr-h6 ((,class (:foreground ,bat-heading6 :weight bold))))
+         `(shr-h1 ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(shr-h2 ((,class (:inherit ,vpitch :foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(shr-h3 ((,class (:inherit ,vpitch :foreground ,bat-heading3 :weight bold :height ,h3))))
+         `(shr-h4 ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
+         `(shr-h5 ((,class (:inherit ,vpitch :foreground ,bat-heading5 :weight bold))))
+         `(shr-h6 ((,class (:inherit ,vpitch :foreground ,bat-heading6 :weight bold))))
          `(shr-link ((,class (:foreground ,bat-blue :underline t))))
          `(shr-selected-link ((,class (:foreground ,bat-peach :underline t))))
          `(shr-code ((,class (:foreground ,bat-teal :background ,bat-mantle))))
@@ -1384,12 +1438,12 @@ The light flavor.")
          `(marginalia-version ((,class (:foreground ,bat-teal))))
 
 ;;;;; asciidoc-mode
-         `(asciidoc-document-title-face ((,class (:foreground ,bat-text :weight bold :height ,h-doc))))
-         `(asciidoc-title-1-face ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
-         `(asciidoc-title-2-face ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
-         `(asciidoc-title-3-face ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
-         `(asciidoc-title-4-face ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(asciidoc-title-5-face ((,class (:foreground ,bat-heading5 :weight bold))))
+         `(asciidoc-document-title-face ((,class (:inherit ,vpitch :foreground ,bat-text :weight bold :height ,h-doc))))
+         `(asciidoc-title-1-face ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(asciidoc-title-2-face ((,class (:inherit ,vpitch :foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(asciidoc-title-3-face ((,class (:inherit ,vpitch :foreground ,bat-heading3 :weight bold :height ,h3))))
+         `(asciidoc-title-4-face ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
+         `(asciidoc-title-5-face ((,class (:inherit ,vpitch :foreground ,bat-heading5 :weight bold))))
          `(asciidoc-markup-face ((,class (:foreground ,bat-overlay2))))
          `(asciidoc-code-face ((,class (:foreground ,bat-teal :background ,bat-mantle :extend t))))
          `(asciidoc-link-face ((,class (:foreground ,bat-blue :underline t))))
@@ -1419,12 +1473,12 @@ The light flavor.")
          `(asciidoc-admonition-warning-face ((,class (:background ,bat-diff-del-bg :extend t))))
 
 ;;;;; markdown-mode
-         `(markdown-header-face-1 ((,class (:foreground ,bat-heading1 :weight bold :height ,h1))))
-         `(markdown-header-face-2 ((,class (:foreground ,bat-heading2 :weight bold :height ,h2))))
-         `(markdown-header-face-3 ((,class (:foreground ,bat-heading3 :weight bold :height ,h3))))
-         `(markdown-header-face-4 ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(markdown-header-face-5 ((,class (:foreground ,bat-heading5 :weight bold))))
-         `(markdown-header-face-6 ((,class (:foreground ,bat-heading6 :weight bold))))
+         `(markdown-header-face-1 ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
+         `(markdown-header-face-2 ((,class (:inherit ,vpitch :foreground ,bat-heading2 :weight bold :height ,h2))))
+         `(markdown-header-face-3 ((,class (:inherit ,vpitch :foreground ,bat-heading3 :weight bold :height ,h3))))
+         `(markdown-header-face-4 ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
+         `(markdown-header-face-5 ((,class (:inherit ,vpitch :foreground ,bat-heading5 :weight bold))))
+         `(markdown-header-face-6 ((,class (:inherit ,vpitch :foreground ,bat-heading6 :weight bold))))
          `(markdown-bold-face ((,class (:weight bold))))
          `(markdown-italic-face ((,class (:slant italic))))
          `(markdown-code-face ((,class (:foreground ,bat-teal :background ,bat-mantle))))
@@ -1621,14 +1675,14 @@ The light flavor.")
          `(font-latex-italic-face ((,class (:foreground ,bat-text :slant italic))))
          `(font-latex-math-face ((,class (:foreground ,bat-teal))))
          `(font-latex-script-char-face ((,class (:foreground ,bat-peach))))
-         `(font-latex-sectioning-0-face ((,class (:foreground ,bat-heading1 :height ,h1 :weight bold))))
-         `(font-latex-sectioning-1-face ((,class (:foreground ,bat-heading2 :height ,h2 :weight bold))))
-         `(font-latex-sectioning-2-face ((,class (:foreground ,bat-heading3 :height ,h3 :weight bold))))
-         `(font-latex-sectioning-3-face ((,class (:foreground ,bat-heading4 :weight bold))))
-         `(font-latex-sectioning-4-face ((,class (:foreground ,bat-heading5 :weight bold))))
-         `(font-latex-sectioning-5-face ((,class (:foreground ,bat-heading6 :weight bold))))
+         `(font-latex-sectioning-0-face ((,class (:inherit ,vpitch :foreground ,bat-heading1 :height ,h1 :weight bold))))
+         `(font-latex-sectioning-1-face ((,class (:inherit ,vpitch :foreground ,bat-heading2 :height ,h2 :weight bold))))
+         `(font-latex-sectioning-2-face ((,class (:inherit ,vpitch :foreground ,bat-heading3 :height ,h3 :weight bold))))
+         `(font-latex-sectioning-3-face ((,class (:inherit ,vpitch :foreground ,bat-heading4 :weight bold))))
+         `(font-latex-sectioning-4-face ((,class (:inherit ,vpitch :foreground ,bat-heading5 :weight bold))))
+         `(font-latex-sectioning-5-face ((,class (:inherit ,vpitch :foreground ,bat-heading6 :weight bold))))
          `(font-latex-sedate-face ((,class (:foreground ,bat-subtext1))))
-         `(font-latex-slide-title-face ((,class (:foreground ,bat-blue :weight bold :height ,h1))))
+         `(font-latex-slide-title-face ((,class (:inherit ,vpitch :foreground ,bat-blue :weight bold :height ,h1))))
          `(font-latex-string-face ((,class (:foreground ,bat-green))))
          `(font-latex-subscript-face ((,class (:height 0.9))))
          `(font-latex-superscript-face ((,class (:height 0.9))))
