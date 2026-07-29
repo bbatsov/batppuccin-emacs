@@ -146,11 +146,46 @@ Override any color across all flavors:
 
 The override alist takes precedence over the built-in palette. Color names match the canonical Catppuccin names with a `bat-` prefix (e.g., `bat-rosewater`, `bat-mauve`, `bat-surface0`).
 
-Disable heading scaling if you prefer uniform sizes in org, markdown, shr, and info:
+### Appearance options
+
+A handful of booleans and numbers adjust the look without forking. They all take effect on the next `load-theme` (or `M-x batppuccin-reload`).
+
+Headings in org, outline, markdown, adoc, asciidoc, shr and info are scaled by default. Turn that off for uniform sizes:
 
 ```elisp
 (setq batppuccin-scale-headings nil)
 ```
+
+Or keep the scaling but tune how much each level grows:
+
+```elisp
+(setq batppuccin-height-doc-title 1.5   ; document titles (default 1.4)
+      batppuccin-height-1 1.4           ; level-1 headings (default 1.3)
+      batppuccin-height-2 1.2           ; level-2 headings (default 1.2)
+      batppuccin-height-3 1.1)          ; level-3 headings (default 1.1)
+```
+
+Render headings in a proportional font, which reads nicely for prose:
+
+```elisp
+(setq batppuccin-use-variable-pitch t)
+```
+
+![Variable-pitch headings, off and on](screenshots/variable-pitch.png)
+
+Comments and docstrings are italic by default. If your font renders italics poorly, turn that off:
+
+```elisp
+(setq batppuccin-italic-comments nil)
+```
+
+Drop the box around the mode line for a flat look:
+
+```elisp
+(setq batppuccin-flat-mode-line t)
+```
+
+![Boxed vs flat mode line](screenshots/flat-mode-line.png)
 
 After changing any of these options, run `M-x batppuccin-reload` to apply them without restarting Emacs.
 
