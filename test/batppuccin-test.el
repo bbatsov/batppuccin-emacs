@@ -112,7 +112,71 @@ frame-side face recomputation (which is unreliable in batch)."
     (it "leaves info / shr top levels at 1.0"
       (dolist (face '(info-title-1 info-title-2 info-title-3
                       shr-h1 shr-h2 shr-h3))
-        (expect (batppuccin-test--face-attr face 'batppuccin-mocha :height) :to-equal 1.0)))))
+        (expect (batppuccin-test--face-attr face 'batppuccin-mocha :height) :to-equal 1.0))))
+
+  (describe "with custom scale factors"
+    (before-each
+      (let ((batppuccin-scale-headings t)
+            (batppuccin-height-1 2.0)
+            (batppuccin-height-doc-title 2.5))
+        (batppuccin-test--reload 'batppuccin-mocha)))
+
+    (it "honors the per-level height factors"
+      (expect (batppuccin-test--face-attr 'outline-1 'batppuccin-mocha :height) :to-equal 2.0)
+      (expect (batppuccin-test--face-attr 'markdown-header-face-1 'batppuccin-mocha :height) :to-equal 2.0)
+      (expect (batppuccin-test--face-attr 'org-document-title 'batppuccin-mocha :height) :to-equal 2.5))))
+
+;;; Appearance options
+
+(describe "italic comments"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v)
+        (disable-theme v))))
+
+  (it "renders comments italic by default"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-test--face-attr 'font-lock-comment-face 'batppuccin-mocha :slant) :to-equal 'italic)
+    (expect (batppuccin-test--face-attr 'font-lock-doc-face 'batppuccin-mocha :slant) :to-equal 'italic))
+
+  (it "drops the italic when disabled"
+    (let ((batppuccin-italic-comments nil))
+      (batppuccin-test--reload 'batppuccin-mocha))
+    (expect (batppuccin-test--face-attr 'font-lock-comment-face 'batppuccin-mocha :slant) :to-equal 'normal)
+    (expect (batppuccin-test--face-attr 'font-lock-doc-face 'batppuccin-mocha :slant) :to-equal 'normal)))
+
+(describe "flat mode line"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v)
+        (disable-theme v))))
+
+  (it "boxes the mode line by default"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-test--face-attr 'mode-line 'batppuccin-mocha :box) :not :to-be nil))
+
+  (it "drops the box when flat"
+    (let ((batppuccin-flat-mode-line t))
+      (batppuccin-test--reload 'batppuccin-mocha))
+    (expect (batppuccin-test--face-attr 'mode-line 'batppuccin-mocha :box) :to-be nil)
+    (expect (batppuccin-test--face-attr 'mode-line-inactive 'batppuccin-mocha :box) :to-be nil)))
+
+(describe "variable-pitch headings"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v)
+        (disable-theme v))))
+
+  (it "leaves headings fixed-pitch by default"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-test--face-attr 'outline-1 'batppuccin-mocha :inherit) :to-equal 'default))
+
+  (it "switches headings to variable-pitch when enabled"
+    (let ((batppuccin-use-variable-pitch t))
+      (batppuccin-test--reload 'batppuccin-mocha))
+    (dolist (face '(outline-1 org-document-title markdown-header-face-1
+                    asciidoc-title-1-face shr-h1 info-title-1))
+      (expect (batppuccin-test--face-attr face 'batppuccin-mocha :inherit) :to-equal 'variable-pitch))))
 
 ;;; Palette integrity
 
