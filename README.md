@@ -15,7 +15,7 @@ The [official catppuccin/emacs](https://github.com/catppuccin/emacs) port has so
 
 - Registers a single `catppuccin` theme and switches flavors via a global variable + reload function. This breaks standard `load-theme` workflows, theme-switching packages like `circadian.el`, and any tooling that expects one theme = one entry in `custom-theme-load-path`. Batppuccin defines four proper themes (`batppuccin-mocha`, `batppuccin-latte`, etc.) that work with `load-theme` out of the box.
 - Loads color definitions from an external file using `load-file-name`, which is nil in certain `load-theme` code paths (e.g., when Emacs hasn't marked the theme as safe yet). This causes the theme to fail to load entirely for some users.
-- No semantic color layer -- faces reference raw palette colors directly, making it hard to reason about color assignments or adjust them systematically.
+- No semantic color layer, so faces reference raw palette colors directly, which makes it hard to reason about color assignments or adjust them systematically.
 
 I think this is partly because the official Emacs port uses Catppuccin's [Whiskers](https://github.com/catppuccin/toolbox/tree/main/whiskers) template tool to generate the Elisp from a `.tera` template. That's great for keeping ports in sync across editors, but it means the generated code doesn't follow Emacs conventions. It doesn't sit well with me.
 
@@ -39,11 +39,11 @@ No support for vertico, marginalia, embark, transient, flycheck, doom-modeline, 
 
 Batppuccin follows the conventions established in [zenburn-emacs](https://github.com/bbatsov/zenburn-emacs) and [emacs-tokyo-night-theme](https://github.com/bbatsov/emacs-tokyo-night-theme):
 
-- **One theme file per flavor.** Each variant (`batppuccin-mocha-theme.el`, `batppuccin-latte-theme.el`, etc.) is a thin wrapper that loads the shared infrastructure and applies its palette. Standard Emacs theme machinery works without any special glue.
-- **Shared infrastructure in `batppuccin.el`.** Color palettes for all four flavors, the face application function, and a `defcustom` for user color overrides all live in one file. Adding a new variant means defining a color alist and a ~10-line wrapper.
-- **All 26 canonical Catppuccin colors** with exact hex values from the spec, plus derived colors for diff backgrounds, selection, cursor line, and the heading rainbow cycle.
-- **Follows the Catppuccin style guide** for syntax highlighting (mauve for keywords, green for strings, blue for functions, peach for constants, sky for operators, yellow for types, overlay2 for comments, rosewater for the cursor) and editor UI (lavender for active line numbers, teal for search backgrounds, red/green/blue at low opacity for diffs).
-- **Broad face coverage** out of the box -- built-in Emacs faces plus magit, vertico, corfu, marginalia, embark, orderless, consult, transient, flycheck, flymake, cider, company, evil, mu4e, notmuch, doom-modeline, treemacs, web-mode, and more.
+- One theme file per flavor. Each variant (`batppuccin-mocha-theme.el`, `batppuccin-latte-theme.el`, etc.) is a thin wrapper that loads the shared infrastructure and applies its palette, so standard Emacs theme machinery works without any special glue.
+- The shared infrastructure lives in `batppuccin.el`: color palettes for all four flavors, the face application function, and a `defcustom` for user color overrides. Adding a new variant means a color alist and a ~10-line wrapper.
+- All 26 canonical Catppuccin colors with exact hex values from the spec, plus derived colors for diff backgrounds, selection, cursor line, and the heading rainbow cycle.
+- Syntax highlighting follows the Catppuccin style guide (mauve for keywords, green for strings, blue for functions, peach for constants, sky for operators, yellow for types, overlay2 for comments, rosewater for the cursor), and so does the editor UI (lavender for active line numbers, teal for search backgrounds, red/green/blue at low opacity for diffs).
+- Broad face coverage out of the box: built-in Emacs faces plus magit, vertico, corfu, marginalia, embark, orderless, consult, transient, flycheck, flymake, cider, company, evil, mu4e, notmuch, doom-modeline, treemacs, web-mode, and more.
 
 ## Installation
 
@@ -191,9 +191,9 @@ After changing any of these options, run `M-x batppuccin-reload` to apply them w
 
 ## Interactive Commands
 
-- `M-x batppuccin-select` -- pick a flavor interactively and load it
-- `M-x batppuccin-reload` -- reload the current theme after changing options
-- `M-x batppuccin-list-colors` -- display all palette colors with samples (prefix arg to pick a variant)
+- `M-x batppuccin-select` - pick a flavor interactively and load it
+- `M-x batppuccin-reload` - reload the current theme after changing options
+- `M-x batppuccin-list-colors` - display all palette colors with samples (prefix arg to pick a variant)
 
 ## Programmatic Access
 
@@ -212,7 +212,7 @@ Or bind the entire palette as local variables with `batppuccin-with-colors`:
   (set-face-attribute 'some-face nil :foreground bat-blue))
 ```
 
-You can also hook into theme loads with `batppuccin-after-load-hook` -- each function receives the theme name as its argument:
+You can also hook into theme loads with `batppuccin-after-load-hook`. Each function receives the theme name as its argument:
 
 ```elisp
 (add-hook 'batppuccin-after-load-hook
