@@ -3,6 +3,14 @@
 ## main (unreleased)
 
 - [#20](https://github.com/bbatsov/batppuccin-emacs/pull/20): Add appearance options: customizable heading scale factors (`batppuccin-height-1` through `-height-3` and `-height-doc-title`), `batppuccin-use-variable-pitch`, `batppuccin-italic-comments` and `batppuccin-flat-mode-line`.
+- [#22](https://github.com/bbatsov/batppuccin-emacs/pull/22): Fix `batppuccin-get-color`,
+  `batppuccin-with-colors`, `batppuccin-reload` and `batppuccin-list-colors` failing with
+  "No Batppuccin theme is active" on Emacs 27 and 28, which never recorded the active variant.
+- [#22](https://github.com/bbatsov/batppuccin-emacs/pull/22): Make face text readable on its
+  own background; `show-paren-match` was 1.64:1 in Latte and `show-paren-mismatch` 2.70:1 in Frappe.
+- [#22](https://github.com/bbatsov/batppuccin-emacs/pull/22): Stop `bookmark-face`,
+  `gnus-summary-cancelled`, `ido-indicator` and `whitespace-empty` sitting on the buffer
+  background, which lifted nothing and hid `hl-line` underneath.
 
 ## 1.1.0 (2026-07-26)
 
