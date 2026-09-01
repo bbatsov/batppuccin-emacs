@@ -6,3 +6,12 @@
 (eldev-add-extra-dependencies 'test 'buttercup)
 
 (eldev-use-plugin 'autoloads)
+
+;; package-lint reports `eldoc-highlight-function-argument' as removed in
+;; Emacs 25.1.  What went away then was a *function* of that name; the face we
+;; theme is defined in eldoc.el to this day and is what eglot and elisp-mode
+;; highlight the current argument with.  package-lint matches the symbol
+;; against its function database, can't tell the two apart, and has no
+;; per-symbol suppression.  It reported nothing else here, so checkdoc and
+;; relint do the linting and the package headers are covered by the suite.
+(setf eldev-lint-default '(doc re))
