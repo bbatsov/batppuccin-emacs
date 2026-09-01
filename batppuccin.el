@@ -310,8 +310,16 @@ The light flavor.")
 
 ;;; Face Application
 
+(defvar batppuccin--current nil
+  "The currently active Batppuccin theme, or nil.")
+
 (defun batppuccin--apply-theme (theme-name colors-alist)
   "Apply the Batppuccin face definitions to THEME-NAME using COLORS-ALIST."
+  ;; `enable-theme-functions' only exists from Emacs 29, so on 27 and 28 the
+  ;; hooks below never fire and every command reading `batppuccin--current'
+  ;; fails with "No Batppuccin theme is active".  Record it here too, since
+  ;; this runs on every `load-theme' whatever the version.
+  (setq batppuccin--current theme-name)
   (let* ((merged (append batppuccin-override-colors-alist colors-alist))
          (class '((class color) (min-colors 88))))
     (cl-flet ((c (name) (cdr (assoc name merged))))
@@ -469,9 +477,9 @@ The light flavor.")
          `(query-replace ((,class (:foreground ,bat-base :background ,bat-peach :weight bold))))
 
 ;;;;; show-paren
-         `(show-paren-match ((,class (:foreground ,bat-peach :background ,bat-surface1 :weight bold))))
+         `(show-paren-match ((,class (:foreground ,bat-text :background ,bat-surface1 :weight bold))))
          `(show-paren-match-expression ((,class (:background ,bat-surface0))))
-         `(show-paren-mismatch ((,class (:foreground ,bat-red :background ,bat-surface1 :weight bold :underline t))))
+         `(show-paren-mismatch ((,class (:foreground ,bat-base :background ,bat-red :weight bold :underline t))))
 
 ;;;;; completions
          `(completions-annotations ((,class (:foreground ,bat-overlay2))))
@@ -634,7 +642,7 @@ The light flavor.")
          `(gnus-header-name ((,class (:foreground ,bat-mauve))))
          `(gnus-header-newsgroups ((,class (:foreground ,bat-teal :weight bold))))
          `(gnus-header-subject ((,class (:foreground ,bat-text :weight bold))))
-         `(gnus-summary-cancelled ((,class (:foreground ,bat-red :background ,bat-base))))
+         `(gnus-summary-cancelled ((,class (:foreground ,bat-red :background ,bat-surface0 :extend t))))
          `(gnus-summary-normal-ancient ((,class (:foreground ,bat-overlay2))))
          `(gnus-summary-normal-read ((,class (:foreground ,bat-overlay1))))
          `(gnus-summary-normal-ticked ((,class (:foreground ,bat-subtext1 :slant italic))))
@@ -671,7 +679,7 @@ The light flavor.")
          `(ido-only-match ((,class (:foreground ,bat-teal :weight bold))))
          `(ido-subdir ((,class (:foreground ,bat-blue))))
          `(ido-incomplete-regexp ((,class (:foreground ,bat-red))))
-         `(ido-indicator ((,class (:foreground ,bat-yellow :background ,bat-base))))
+         `(ido-indicator ((,class (:foreground ,bat-base :background ,bat-red))))
          `(ido-virtual ((,class (:foreground ,bat-overlay2))))
 
 ;;;;; info
@@ -897,7 +905,7 @@ The light flavor.")
          `(term-color-white ((,class (:inherit ansi-color-white))))
 
 ;;;;; whitespace-mode
-         `(whitespace-empty ((,class (:foreground ,bat-red :background ,bat-base))))
+         `(whitespace-empty ((,class (:foreground ,bat-red :background ,bat-surface0 :extend t))))
          `(whitespace-hspace ((,class (:foreground ,bat-surface1))))
          `(whitespace-indentation ((,class (:foreground ,bat-surface1))))
          `(whitespace-line ((,class (:foreground ,bat-red :background ,bat-surface0))))
@@ -907,7 +915,7 @@ The light flavor.")
          `(whitespace-space-before-tab ((,class (:foreground ,bat-peach))))
          `(whitespace-tab ((,class (:foreground ,bat-surface1))))
          `(whitespace-trailing ((,class (:foreground ,bat-red :background ,bat-diff-del-bg))))
-         `(whitespace-big-indent ((,class (:foreground ,bat-peach :background ,bat-surface0))))
+         `(whitespace-big-indent ((,class (:foreground ,bat-base :background ,bat-red))))
 
 ;;;;; woman
          `(woman-bold ((,class (:foreground ,bat-blue :weight bold))))
@@ -920,7 +928,7 @@ The light flavor.")
 
 ;;;; Built-in packages
 ;;;;; bookmark
-         `(bookmark-face ((,class (:foreground ,bat-yellow :background ,bat-base))))
+         `(bookmark-face ((,class (:foreground ,bat-yellow))))
 
 ;;;;; calendar
          `(calendar-today ((,class (:foreground ,bat-blue :weight bold :underline t))))
@@ -1340,16 +1348,16 @@ The light flavor.")
          `(magit-diff-added-highlight ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold :extend t))))
          `(magit-diff-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :extend t))))
          `(magit-diff-removed-highlight ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold :extend t))))
-         `(magit-diff-base ((,class (:foreground ,bat-peach :background ,bat-diff-chg-bg :extend t))))
-         `(magit-diff-base-highlight ((,class (:foreground ,bat-peach :background ,bat-diff-chg-bg :weight bold :extend t))))
+         `(magit-diff-base ((,class (:foreground ,bat-text :background ,bat-diff-chg-bg :extend t))))
+         `(magit-diff-base-highlight ((,class (:foreground ,bat-text :background ,bat-diff-chg-bg :weight bold :extend t))))
          `(magit-diff-context ((,class (:foreground ,bat-overlay2 :extend t))))
          `(magit-diff-context-highlight ((,class (:foreground ,bat-subtext0 :background ,bat-mantle :extend t))))
          `(magit-diff-file-heading ((,class (:foreground ,bat-text :weight bold :extend t))))
          `(magit-diff-file-heading-highlight ((,class (:foreground ,bat-text :background ,bat-surface0 :weight bold :extend t))))
-         `(magit-diff-file-heading-selection ((,class (:foreground ,bat-peach :background ,bat-surface0 :extend t))))
+         `(magit-diff-file-heading-selection ((,class (:foreground ,bat-text :background ,bat-surface2 :extend t))))
          `(magit-diff-hunk-heading ((,class (:foreground ,bat-subtext1 :background ,bat-surface0 :extend t))))
          `(magit-diff-hunk-heading-highlight ((,class (:foreground ,bat-text :background ,bat-surface1 :weight bold :extend t))))
-         `(magit-diff-hunk-heading-selection ((,class (:foreground ,bat-peach :background ,bat-surface1 :extend t))))
+         `(magit-diff-hunk-heading-selection ((,class (:foreground ,bat-text :background ,bat-surface2 :extend t))))
          `(magit-diff-lines-heading ((,class (:foreground ,bat-base :background ,bat-peach :extend t))))
          `(magit-diff-revision-summary ((,class (:foreground ,bat-blue :weight bold))))
          `(magit-diff-revision-summary-highlight ((,class (:foreground ,bat-blue :weight bold))))
@@ -1919,9 +1927,6 @@ Uses the WCAG 2.0 formula."
        (* 0.0722 (funcall adjust b)))))
 
 ;;; User Commands
-
-(defvar batppuccin--current nil
-  "The currently active Batppuccin theme, or nil.")
 
 (defconst batppuccin--variants
   '(batppuccin-mocha batppuccin-macchiato batppuccin-frappe batppuccin-latte)

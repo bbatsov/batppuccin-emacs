@@ -25,6 +25,37 @@
   '(batppuccin-mocha batppuccin-macchiato batppuccin-frappe batppuccin-latte)
   "All theme variants exercised by the suite.")
 
+(defconst batppuccin-test--source-file
+  (expand-file-name
+   "../batppuccin.el"
+   (file-name-directory (or load-file-name buffer-file-name default-directory)))
+  "Path to the theme source, for the checks that read it as text.")
+
+(defun batppuccin-test--palette (variant)
+  "Return the colors-alist for VARIANT."
+  (symbol-value (intern (format "%s-colors-alist" variant))))
+
+(defun batppuccin-test--luminance (hex)
+  "Return the WCAG relative luminance of the color HEX."
+  (let ((channels (mapcar
+                   (lambda (offset)
+                     (let ((v (/ (string-to-number
+                                  (substring hex offset (+ offset 2)) 16)
+                                 255.0)))
+                       (if (<= v 0.04045) (/ v 12.92)
+                         (expt (/ (+ v 0.055) 1.055) 2.4))))
+                   '(1 3 5))))
+    (+ (* 0.2126 (nth 0 channels))
+       (* 0.7152 (nth 1 channels))
+       (* 0.0722 (nth 2 channels)))))
+
+(defun batppuccin-test--contrast (a b)
+  "Return the WCAG contrast ratio between the colors A and B."
+  (let* ((la (batppuccin-test--luminance a))
+         (lb (batppuccin-test--luminance b))
+         (lighter (max la lb)) (darker (min la lb)))
+    (/ (+ lighter 0.05) (+ darker 0.05))))
+
 (defun batppuccin-test--reload (variant)
   "Disable any active Batppuccin theme and (re-)load VARIANT.
 Reloading re-evaluates the theme file, which picks up any let-bound
@@ -213,6 +244,87 @@ frame-side face recomputation (which is unreliable in batch)."
       (dolist (entry alist)
         (expect (cdr entry) :to-match "\\`#[0-9a-fA-F]\\{6\\}\\'")))))
 
+;;; Text has to be readable on its own background
+
+(defconst batppuccin-test--dim-colors
+  '("bat-overlay0" "bat-overlay1" "bat-overlay2"
+    "bat-surface0" "bat-surface1" "bat-surface2")
+  "Palette entries Catppuccin hands to de-emphasized text.
+A face reaching for one of these is asking to recede, so it opts out of
+the contrast floor rather than needing an entry in an exception list.")
+
+(defconst batppuccin-test--legibility-floor 3.0
+  "Contrast a face's own text must reach against its own background.")
+
+(defconst batppuccin-test--latte-legibility-floor 2.3
+  "The same floor for Latte, which the palette holds back.
+Catppuccin's light accents are mid-luminance pastels, so text on an
+accent background cannot reach 3:1 whichever direction it goes: dark text
+on Latte's red manages 1.47 and light text 2.34.  That is the palette
+rather than the mapping, so this pins the current worst value instead of
+demanding a number the colors cannot deliver.")
+
+(defun batppuccin-test--dim-p (variant color)
+  "Return non-nil if COLOR is one of VARIANT's de-emphasized entries."
+  (let ((palette (batppuccin-test--palette variant)))
+    (seq-some (lambda (name) (equal color (cdr (assoc name palette))))
+              batppuccin-test--dim-colors)))
+
+(describe "text on its own background"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v) (disable-theme v))))
+
+  (dolist (variant batppuccin-test--variants)
+    (it (format "stays readable in %s" variant)
+      (batppuccin-test--reload variant)
+      (let ((floor (if (eq variant 'batppuccin-latte)
+                       batppuccin-test--latte-legibility-floor
+                     batppuccin-test--legibility-floor))
+            (illegible '()))
+        (mapatoms
+         (lambda (sym)
+           (let ((fg (batppuccin-test--face-attr sym variant :foreground))
+                 (bg (batppuccin-test--face-attr sym variant :background)))
+             (when (and (stringp fg) (stringp bg)
+                        ;; ansi and term color faces set foreground and
+                        ;; background alike on purpose
+                        (not (string-match-p "\\`\\(ansi\\|term\\)-color-" (symbol-name sym)))
+                        (not (batppuccin-test--dim-p variant fg))
+                        (< (batppuccin-test--contrast fg bg) floor))
+               (push (list sym (batppuccin-test--contrast fg bg)) illegible)))))
+        (expect illegible :to-equal '())))))
+
+;;; Backgrounds that match the buffer background
+
+(defconst batppuccin-test--flat-background-faces
+  '(default fringe term
+    line-number line-number-current-line
+    line-number-major-tick line-number-minor-tick
+    centaur-tabs-selected centaur-tabs-selected-modified
+    tab-bar-tab tab-bar-tab-group-current tab-line-tab tab-line-tab-current)
+  "Faces allowed to set `:background' to the variant's own `bat-base'.
+Setting it elsewhere lifts nothing and punches through whatever is
+underneath, such as `hl-line' or `region'.")
+
+(describe "faces sitting on the buffer background"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v) (disable-theme v))))
+
+  (dolist (variant batppuccin-test--variants)
+    (it (format "only lets the allowed faces match bat-base in %s" variant)
+      (batppuccin-test--reload variant)
+      (let ((bg (cdr (assoc "bat-base" (batppuccin-test--palette variant))))
+            (offenders '()))
+        (mapatoms
+         (lambda (sym)
+           (when (and (assoc variant (get sym 'theme-face))
+                      (equal (batppuccin-test--face-attr sym variant :background) bg)
+                      (not (memq sym batppuccin-test--flat-background-faces)))
+             (push sym offenders))))
+        (expect offenders :to-equal '())))))
+
 ;;; Code-block backgrounds
 
 (describe "markdown-code-face background"
@@ -335,6 +447,168 @@ frame-side face recomputation (which is unreliable in batch)."
       (expect (batppuccin-test--face-attr 'inf-ruby-result-overlay-face 'batppuccin-mocha attr)
               :to-equal
               (batppuccin-test--face-attr 'cider-result-overlay-face 'batppuccin-mocha attr)))))
+;;; The shape of the source itself
+
+(defun batppuccin-test--face-body ()
+  "Return the part of the source holding the face definitions."
+  (with-temp-buffer
+    (insert-file-contents batppuccin-test--source-file)
+    (goto-char (point-min))
+    (search-forward "batppuccin--apply-theme")
+    (buffer-substring-no-properties (point) (point-max))))
+
+(defun batppuccin-test--matches (regexp string &optional group)
+  "Return every GROUP match of REGEXP in STRING."
+  (let ((start 0) (found '()))
+    (while (string-match regexp string start)
+      (push (match-string (or group 1) string) found)
+      (setq start (match-end 0)))
+    (nreverse found)))
+
+(describe "the source"
+  (it "defines each face exactly once"
+    (let* ((faces (batppuccin-test--matches
+                   "`(\\([^ ()]+\\) ((,class" (batppuccin-test--face-body)))
+           (seen (make-hash-table :test 'equal)) (dupes '()))
+      (dolist (face faces)
+        (when (gethash face seen) (push face dupes))
+        (puthash face t seen))
+      (expect (delete-dups dupes) :to-equal '())))
+
+  (it "takes every color from the palette rather than hardcoding it"
+    (expect (batppuccin-test--matches
+             ":\\(?:fore\\|back\\)ground \\(\"#[0-9a-fA-F]\\{6\\}\"\\)"
+             (batppuccin-test--face-body))
+            :to-equal '()))
+
+  (it "only refers to colors the palette defines"
+    (let* ((defined (mapcar #'car (batppuccin-test--palette 'batppuccin-mocha)))
+           (used (delete-dups (batppuccin-test--matches
+                               ",\\(bat-[a-z0-9-]+\\)" (batppuccin-test--face-body)))))
+      (expect (seq-remove (lambda (name) (member name defined)) used)
+              :to-equal '()))))
+
+;;; Package headers
+
+(defconst batppuccin-test--source-files
+  (let ((dir (file-name-directory batppuccin-test--source-file)))
+    (mapcar (lambda (name) (expand-file-name name dir))
+            '("batppuccin.el" "batppuccin-mocha-theme.el" "batppuccin-macchiato-theme.el"
+              "batppuccin-frappe-theme.el" "batppuccin-latte-theme.el")))
+  "Every hand-written file that ships in the package.")
+
+(defun batppuccin-test--file-text (file)
+  (with-temp-buffer (insert-file-contents file) (buffer-string)))
+
+(describe "package headers"
+  (dolist (file batppuccin-test--source-files)
+    (let ((name (file-name-nondirectory file)))
+      (it (format "%s opens with a summary and a lexical-binding cookie" name)
+        (expect (car (split-string (batppuccin-test--file-text file) "\n"))
+                :to-match (rx-to-string '(seq ";;; " (1+ nonl) " --- " (1+ nonl)
+                                              "-*- lexical-binding: t; -*-"))))
+      (it (format "%s closes with the conventional footer" name)
+        (expect (string-trim-right (batppuccin-test--file-text file))
+                :to-match (rx-to-string `(seq ";;; " ,name " ends here" eos))))))
+
+  (it "declares the headers a package needs"
+    (let ((text (batppuccin-test--file-text batppuccin-test--source-file)))
+      (dolist (header '("Author" "URL" "Version" "Package-Requires" "Keywords"))
+        (expect (string-match-p (concat "^;; " header ": ") text) :not :to-be nil))))
+
+  (it "declares a Package-Requires that reads back as an alist"
+    (let* ((text (batppuccin-test--file-text batppuccin-test--source-file))
+           (_ (string-match "^;; Package-Requires: \\(.*\\)$" text))
+           (deps (car (read-from-string (match-string 1 text)))))
+      (expect (assq 'emacs deps) :not :to-be nil))))
+
+;;; Emphasis restraint
+
+(describe "emphasis"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v) (disable-theme v))))
+
+  (it "never stacks three emphasis attributes on one face"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (let ((overwrought '()))
+      (mapatoms
+       (lambda (sym)
+         (when (assoc 'batppuccin-mocha (get sym 'theme-face))
+           (when (> (seq-count (lambda (attr)
+                                 (batppuccin-test--face-attr sym 'batppuccin-mocha attr))
+                               '(:weight :slant :underline :box :overline :strike-through))
+                    2)
+             (push sym overwrought)))))
+      (expect overwrought :to-equal '()))))
+
+;;; Public API
+
+(describe "the public API"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v) (disable-theme v)))
+    (setq batppuccin-override-colors-alist '()))
+
+  (it "reads a color from the active variant"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-get-color "bat-base") :to-equal "#1e1e2e"))
+
+  (it "reads a color from a variant that isn't active"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-get-color "bat-base" 'batppuccin-latte) :to-equal "#eff1f5"))
+
+  ;; `enable-theme-functions' only exists from Emacs 29.  Without this, every
+  ;; command reading the active variant fails on 27 and 28, which the package
+  ;; claims to support.
+  (it "knows the active variant without enable-theme-functions"
+    (let ((enable-theme-functions nil) (disable-theme-functions nil))
+      (setq batppuccin--current nil)
+      (batppuccin-test--reload 'batppuccin-frappe)
+      (expect batppuccin--current :to-be 'batppuccin-frappe)
+      (expect (batppuccin-get-color "bat-base") :to-equal "#303446")))
+
+  (it "binds palette colors inside batppuccin-with-colors"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (expect (batppuccin-with-colors bat-base) :to-equal "#1e1e2e"))
+
+  (it "lets batppuccin-override-colors-alist win"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (setq batppuccin-override-colors-alist '(("bat-base" . "#000000")))
+    (expect (batppuccin-get-color "bat-base") :to-equal "#000000"))
+
+  (it "reapplies an override on reload"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (setq batppuccin-override-colors-alist '(("bat-base" . "#010203")))
+    (batppuccin-reload)
+    (expect (batppuccin-test--face-attr 'default 'batppuccin-mocha :background)
+            :to-equal "#010203"))
+
+  (it "renders the palette buffer without error"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (batppuccin-list-colors)
+    (expect (get-buffer "*Batppuccin Palette: batppuccin-mocha*") :not :to-be nil)))
+
+;;; Switching between variants
+
+(describe "batppuccin-select"
+  (after-each
+    (dolist (v batppuccin-test--variants)
+      (when (custom-theme-enabled-p v) (disable-theme v))))
+
+  (it "leaves exactly one variant enabled"
+    (batppuccin-test--reload 'batppuccin-mocha)
+    (spy-on 'completing-read :and-return-value "batppuccin-latte")
+    (batppuccin-select)
+    (expect (seq-filter #'custom-theme-enabled-p batppuccin-test--variants)
+            :to-equal '(batppuccin-latte)))
+
+  (it "runs batppuccin-after-load-hook with the chosen variant"
+    (let* ((seen '())
+           (batppuccin-after-load-hook (list (lambda (theme) (push theme seen)))))
+      (spy-on 'completing-read :and-return-value "batppuccin-frappe")
+      (batppuccin-select)
+      (expect seen :to-equal '(batppuccin-frappe)))))
 
 ;;; Variant loading smoke tests
 
