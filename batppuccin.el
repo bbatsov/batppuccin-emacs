@@ -402,6 +402,23 @@ The light flavor.")
          `(window-divider-first-pixel ((,class (:foreground ,bat-surface1))))
          `(window-divider-last-pixel ((,class (:foreground ,bat-surface1))))
          `(widget-field ((,class (:background ,bat-surface0 :extend t))))
+         `(help-key-binding ((,class (:inherit fixed-pitch :foreground ,bat-blue :background ,bat-mantle
+                                                  :box (:line-width -1 :color ,bat-surface0)))))
+         `(nobreak-space ((,class (:foreground ,bat-pink :underline t))))
+         `(nobreak-hyphen ((,class (:foreground ,bat-pink))))
+         `(separator-line ((,class (:background ,bat-surface1 :height 0.1))))
+         `(tool-bar ((,class (:foreground ,bat-text :background ,bat-mantle))))
+         `(tty-menu-enabled-face ((,class (:foreground ,bat-text :background ,bat-mantle))))
+         `(tty-menu-disabled-face ((,class (:foreground ,bat-overlay1 :background ,bat-mantle))))
+         `(tty-menu-selected-face ((,class (:foreground ,bat-text :background ,bat-selection))))
+         `(confusingly-reordered ((,class (:underline (:style wave :color ,bat-red)))))
+         `(textsec-suspicious ((,class (:foreground ,bat-red :background ,bat-diff-del-bg))))
+         `(icon-button ((,class (:foreground ,bat-text :background ,bat-surface0
+                                             :box (:line-width -1 :color ,bat-surface1)))))
+         `(emoji-with-derivations ((,class (:background ,bat-surface0))))
+         `(widget-single-line-field ((,class (:background ,bat-surface0))))
+         `(widget-button-pressed ((,class (:foreground ,bat-red))))
+         `(widget-documentation ((,class (:foreground ,bat-subtext1))))
 
 ;;;;; fill-column-indicator
          `(fill-column-indicator ((,class (:foreground ,bat-surface0 :weight normal))))
@@ -510,6 +527,16 @@ The light flavor.")
                                                      :box (:line-width 2 :color ,bat-surface1 :style released-button)))))
          `(custom-button-pressed ((,class (:foreground ,bat-text :background ,bat-surface0
                                                        :box (:line-width 2 :color ,bat-surface1 :style pressed-button)))))
+         `(custom-button-pressed-unraised ((,class (:foreground ,bat-mauve :underline t))))
+         `(custom-changed ((,class (:foreground ,bat-peach))))
+         `(custom-comment ((,class (:background ,bat-surface0))))
+         `(custom-comment-tag ((,class (:foreground ,bat-subtext1))))
+         `(custom-invalid ((,class (:foreground ,bat-red :background ,bat-diff-del-bg))))
+         `(custom-modified ((,class (:foreground ,bat-yellow))))
+         `(custom-rogue ((,class (:foreground ,bat-red :background ,bat-mantle))))
+         `(custom-set ((,class (:foreground ,bat-blue))))
+         `(custom-themed ((,class (:foreground ,bat-teal))))
+         `(custom-variable-obsolete ((,class (:foreground ,bat-overlay1))))
 
 ;;;;; diff
          `(diff-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :extend t))))
@@ -525,6 +552,8 @@ The light flavor.")
          `(diff-indicator-removed ((,class (:foreground ,bat-red))))
          `(diff-indicator-changed ((,class (:foreground ,bat-blue))))
          `(diff-nonexistent ((,class (:foreground ,bat-overlay2))))
+         `(diff-changed-unspecified ((,class (:background ,bat-diff-chg-bg :extend t))))
+         `(diff-error ((,class (:foreground ,bat-red :weight bold))))
 
 ;;;;; dired
          `(dired-directory ((,class (:foreground ,bat-blue :weight bold))))
@@ -578,6 +607,10 @@ The light flavor.")
          `(ediff-odd-diff-A ((,class (:background ,bat-surface0 :extend t))))
          `(ediff-odd-diff-B ((,class (:background ,bat-surface0 :extend t))))
          `(ediff-odd-diff-C ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-current-diff-Ancestor ((,class (:background ,bat-selection :extend t))))
+         `(ediff-fine-diff-Ancestor ((,class (:foreground ,bat-mauve :background ,bat-selection :weight bold :extend t))))
+         `(ediff-even-diff-Ancestor ((,class (:background ,bat-surface0 :extend t))))
+         `(ediff-odd-diff-Ancestor ((,class (:background ,bat-surface0 :extend t))))
 
 ;;;;; eshell
          `(eshell-prompt ((,class (:foreground ,bat-blue :weight bold))))
@@ -612,6 +645,7 @@ The light flavor.")
          `(erc-prompt-face ((,class (:foreground ,bat-blue :weight bold))))
          `(erc-timestamp-face ((,class (:foreground ,bat-overlay1))))
          `(erc-underline-face ((,class (:underline t))))
+         `(erc-dangerous-host-face ((,class (:foreground ,bat-red))))
 
 ;;;;; flymake
          `(flymake-error ((,class (:underline (:style wave :color ,bat-red)))))
@@ -648,6 +682,30 @@ The light flavor.")
          `(gnus-summary-normal-ticked ((,class (:foreground ,bat-subtext1 :slant italic))))
          `(gnus-summary-normal-unread ((,class (:foreground ,bat-text :weight bold))))
          `(gnus-summary-selected ((,class (:foreground ,bat-blue :weight bold :underline t))))
+         `(gnus-cite-1 ((,class (:foreground ,bat-blue))))
+         `(gnus-cite-2 ((,class (:foreground ,bat-mauve))))
+         `(gnus-cite-3 ((,class (:foreground ,bat-teal))))
+         `(gnus-cite-4 ((,class (:foreground ,bat-peach))))
+         `(gnus-cite-5 ((,class (:foreground ,bat-green))))
+         `(gnus-cite-6 ((,class (:foreground ,bat-sky))))
+         `(gnus-cite-7 ((,class (:foreground ,bat-yellow))))
+         `(gnus-cite-8 ((,class (:foreground ,bat-red))))
+         `(gnus-cite-9 ((,class (:foreground ,bat-blue))))
+         `(gnus-cite-10 ((,class (:foreground ,bat-mauve))))
+         `(gnus-cite-11 ((,class (:foreground ,bat-teal))))
+         `(gnus-emphasis-highlight-words ((,class (:foreground ,bat-base :background ,bat-yellow))))
+         `(gnus-server-agent ((,class (:foreground ,bat-sky :weight bold))))
+         `(gnus-server-closed ((,class (:foreground ,bat-overlay1 :slant italic))))
+         `(gnus-server-cloud ((,class (:foreground ,bat-teal :weight bold))))
+         `(gnus-server-cloud-host ((,class (:foreground ,bat-base :background ,bat-teal))))
+         `(gnus-server-denied ((,class (:foreground ,bat-red :weight bold))))
+         `(gnus-server-offline ((,class (:foreground ,bat-yellow :weight bold))))
+         `(gnus-server-opened ((,class (:foreground ,bat-green :weight bold))))
+         `(gnus-splash ((,class (:foreground ,bat-overlay1))))
+         `(gnus-summary-normal-undownloaded ((,class (:foreground ,bat-subtext1))))
+         `(mm-command-output ((,class (:foreground ,bat-green))))
+         `(mm-uu-extract ((,class (:foreground ,bat-text :background ,bat-mantle :extend t))))
+         `(spam ((,class (:foreground ,bat-overlay1))))
 
 ;;;;; grep
          `(grep-context-face ((,class (:foreground ,bat-subtext1))))
@@ -663,6 +721,8 @@ The light flavor.")
          `(hi-blue-b ((,class (:foreground ,bat-blue :weight bold))))
          `(hi-green-b ((,class (:foreground ,bat-green :weight bold))))
          `(hi-red-b ((,class (:foreground ,bat-red :weight bold))))
+         `(hi-aquamarine ((,class (:foreground ,bat-base :background ,bat-teal))))
+         `(hi-salmon ((,class (:foreground ,bat-base :background ,bat-peach))))
 
 ;;;;; hl-line
          `(hl-line ((,class (:background ,bat-cursor-line :extend t))))
@@ -673,6 +733,8 @@ The light flavor.")
 ;;;;; icomplete
          `(icomplete-first-match ((,class (:foreground ,bat-green :weight bold))))
          `(icomplete-selected-match ((,class (:background ,bat-surface0))))
+         `(icomplete-vertical-selected-prefix-indicator-face ((,class (:foreground ,bat-blue :weight bold))))
+         `(icomplete-vertical-unselected-prefix-indicator-face ((,class (:foreground ,bat-overlay1))))
 
 ;;;;; ido
          `(ido-first-match ((,class (:foreground ,bat-green :weight bold))))
@@ -841,6 +903,27 @@ The light flavor.")
          `(org-agenda-done ((,class (:foreground ,bat-green))))
          `(org-agenda-structure ((,class (:foreground ,bat-mauve :weight bold))))
          `(org-agenda-current-time ((,class (:foreground ,bat-sky))))
+         `(org-agenda-dimmed-todo-face ((,class (:foreground ,bat-overlay1))))
+         `(org-agenda-restriction-lock ((,class (:background ,bat-surface0))))
+         `(org-beamer-tag ((,class (:box (:line-width 1 :color ,bat-overlay1)))))
+         `(org-clock-overlay ((,class (:foreground ,bat-text :background ,bat-selection))))
+         `(org-column ((,class (:background ,bat-mantle))))
+         `(org-column-title ((,class (:background ,bat-mantle :weight bold :underline t))))
+         `(org-date-selected ((,class (:foreground ,bat-base :background ,bat-sky))))
+         `(org-dispatcher-highlight ((,class (:foreground ,bat-base :background ,bat-yellow :weight bold))))
+         `(org-headline-todo ((,class (:foreground ,bat-peach))))
+         `(org-latex-and-related ((,class (:foreground ,bat-peach))))
+         `(org-mode-line-clock-overrun ((,class (:foreground ,bat-red :weight bold))))
+         `(org-sexp-date ((,class (:foreground ,bat-sky))))
+         `(org-table-header ((,class (:foreground ,bat-text :background ,bat-surface0 :weight bold))))
+         `(org-habit-clear-face ((,class (:background ,bat-surface2))))
+         `(org-habit-clear-future-face ((,class (:background ,bat-surface0))))
+         `(org-habit-ready-face ((,class (:background ,bat-green))))
+         `(org-habit-ready-future-face ((,class (:background ,bat-diff-add-bg))))
+         `(org-habit-alert-face ((,class (:foreground ,bat-base :background ,bat-yellow))))
+         `(org-habit-alert-future-face ((,class (:foreground ,bat-base :background ,bat-peach))))
+         `(org-habit-overdue-face ((,class (:background ,bat-red))))
+         `(org-habit-overdue-future-face ((,class (:background ,bat-diff-del-bg))))
 
 ;;;;; outline
          `(outline-1 ((,class (:inherit ,vpitch :foreground ,bat-heading1 :weight bold :height ,h1))))
@@ -863,6 +946,12 @@ The light flavor.")
          `(ruler-mode-column-number ((,class (:foreground ,bat-subtext1))))
          `(ruler-mode-current-column ((,class (:foreground ,bat-yellow :weight bold))))
          `(ruler-mode-fill-column ((,class (:foreground ,bat-red))))
+         `(ruler-mode-comment-column ((,class (:inherit ruler-mode-default :foreground ,bat-mauve))))
+         `(ruler-mode-fringes ((,class (:inherit ruler-mode-default :foreground ,bat-green))))
+         `(ruler-mode-goal-column ((,class (:inherit ruler-mode-default :foreground ,bat-peach))))
+         `(ruler-mode-margins ((,class (:inherit ruler-mode-default :foreground ,bat-text))))
+         `(ruler-mode-pad ((,class (:inherit ruler-mode-default :background ,bat-surface0))))
+         `(ruler-mode-tab-stop ((,class (:inherit ruler-mode-default :foreground ,bat-blue))))
 
 ;;;;; sh-mode
          `(sh-heredoc ((,class (:foreground ,bat-green :slant italic))))
@@ -892,6 +981,9 @@ The light flavor.")
          `(tab-line-tab-current ((,class (:foreground ,bat-text :background ,bat-base :weight bold))))
          `(tab-line-tab-inactive ((,class (:foreground ,bat-overlay1 :background ,bat-mantle))))
          `(tab-line-highlight ((,class (:background ,bat-surface0))))
+         `(tab-bar-tab-highlight ((,class (:foreground ,bat-text :background ,bat-surface0))))
+         `(tab-line-tab-inactive-alternate ((,class (:foreground ,bat-overlay1 :background ,bat-crust))))
+         `(tab-line-close-highlight ((,class (:foreground ,bat-red))))
 
 ;;;;; term / ansi-term / vterm
          `(term ((,class (:foreground ,bat-text :background ,bat-base))))
@@ -916,6 +1008,7 @@ The light flavor.")
          `(whitespace-tab ((,class (:foreground ,bat-surface1))))
          `(whitespace-trailing ((,class (:foreground ,bat-red :background ,bat-diff-del-bg))))
          `(whitespace-big-indent ((,class (:foreground ,bat-base :background ,bat-red))))
+         `(whitespace-missing-newline-at-eof ((,class (:foreground ,bat-base :background ,bat-yellow))))
 
 ;;;;; woman
          `(woman-bold ((,class (:foreground ,bat-blue :weight bold))))
@@ -979,6 +1072,8 @@ The light flavor.")
                                                  :box (:line-width -1 :color ,bat-surface1)))))
          `(eww-form-submit ((,class (:foreground ,bat-text :background ,bat-surface1
                                                  :box (:line-width -1 :color ,bat-surface2)))))
+         `(eww-form-file ((,class (:foreground ,bat-text :background ,bat-surface0
+                                               :box (:line-width -1 :color ,bat-overlay1)))))
 
 ;;;;; man
          `(Man-overstrike ((,class (:foreground ,bat-blue :weight bold))))
@@ -989,9 +1084,26 @@ The light flavor.")
          `(proced-mark ((,class (:foreground ,bat-peach :weight bold))))
          `(proced-marked ((,class (:foreground ,bat-mauve :weight bold))))
          `(proced-sort-header ((,class (:foreground ,bat-blue :weight bold :underline t))))
+         `(proced-cpu ((,class (:foreground ,bat-mauve :weight bold))))
+         `(proced-emacs-pid ((,class (:foreground ,bat-pink))))
+         `(proced-executable ((,class (:foreground ,bat-blue))))
+         `(proced-interruptible-sleep-status-code ((,class (:foreground ,bat-overlay1))))
+         `(proced-mem ((,class (:foreground ,bat-mauve))))
+         `(proced-memory-high-usage ((,class (:foreground ,bat-red))))
+         `(proced-memory-low-usage ((,class (:foreground ,bat-green))))
+         `(proced-memory-medium-usage ((,class (:foreground ,bat-yellow))))
+         `(proced-pgrp ((,class (:foreground ,bat-teal))))
+         `(proced-pid ((,class (:foreground ,bat-sky))))
+         `(proced-ppid ((,class (:foreground ,bat-sky))))
+         `(proced-run-status-code ((,class (:foreground ,bat-green))))
+         `(proced-sess ((,class (:foreground ,bat-teal))))
+         `(proced-session-leader-pid ((,class (:foreground ,bat-sky :underline t))))
+         `(proced-time-colon ((,class (:foreground ,bat-overlay1))))
+         `(proced-uninterruptible-sleep-status-code ((,class (:foreground ,bat-red))))
 
 ;;;;; pulse
          `(pulse-highlight-start-face ((,class (:background ,bat-surface1))))
+         `(pulse-highlight-face ((,class (:background ,bat-surface1))))
 
 ;;;;; speedbar
          `(speedbar-button-face ((,class (:foreground ,bat-green))))
@@ -1012,6 +1124,8 @@ The light flavor.")
          `(vc-needs-update-state ((,class (:foreground ,bat-peach))))
          `(vc-removed-state ((,class (:foreground ,bat-red))))
          `(vc-up-to-date-state ((,class (:foreground ,bat-green))))
+         `(log-view-file ((,class (:foreground ,bat-blue :weight bold :extend t))))
+         `(log-view-message ((,class (:foreground ,bat-mauve :weight bold :extend t))))
 
 ;;;;; diff-hl
          `(diff-hl-change ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg))))
@@ -1026,6 +1140,120 @@ The light flavor.")
          `(smerge-refined-added ((,class (:foreground ,bat-green :background ,bat-diff-add-bg :weight bold :extend t))))
          `(smerge-refined-removed ((,class (:foreground ,bat-red :background ,bat-diff-del-bg :weight bold :extend t))))
          `(smerge-refined-changed ((,class (:foreground ,bat-blue :background ,bat-diff-chg-bg :weight bold :extend t))))
+
+;;;;; cperl-mode
+         `(cperl-array-face ((,class (:foreground ,bat-sky))))
+         `(cperl-hash-face ((,class (:foreground ,bat-peach))))
+         `(cperl-nonoverridable-face ((,class (:foreground ,bat-mauve))))
+
+;;;;; cua
+         `(cua-global-mark ((,class (:foreground ,bat-base :background ,bat-yellow))))
+         `(cua-rectangle ((,class (:foreground ,bat-text :background ,bat-selection))))
+         `(cua-rectangle-noselect ((,class (:foreground ,bat-subtext1 :background ,bat-surface0))))
+
+;;;;; edebug
+         `(edebug-disabled-breakpoint ((,class (:background ,bat-diff-add-bg :extend t))))
+
+;;;;; edmacro
+         `(edmacro-label ((,class (:foreground ,bat-blue :weight bold))))
+
+;;;;; elisp-mode
+         `(elisp-condition ((,class (:foreground ,bat-red))))
+         `(elisp-major-mode-name ((,class (:foreground ,bat-green))))
+         `(elisp-non-local-exit ((,class (:inherit elisp-function :underline (:color ,bat-red)))))
+         `(elisp-rx ((,class (:foreground ,bat-pink))))
+         `(elisp-shorthand-font-lock-face ((,class (:foreground ,bat-sky))))
+         `(elisp-symbol-at-mouse ((,class (:background ,bat-surface0))))
+         `(elisp-symbol-role ((,class (:foreground ,bat-blue))))
+         `(elisp-symbol-role-definition ((,class (:foreground ,bat-blue))))
+         `(elisp-unknown-call ((,class (:foreground ,bat-subtext1))))
+
+;;;;; ert / testcover
+         `(ert-test-result-expected ((,class (:foreground ,bat-base :background ,bat-green))))
+         `(ert-test-result-unexpected ((,class (:foreground ,bat-base :background ,bat-red))))
+         `(testcover-1value ((,class (:background ,bat-diff-chg-bg))))
+         `(testcover-nohits ((,class (:background ,bat-diff-del-bg))))
+
+;;;;; gdb
+         `(breakpoint-disabled ((,class (:foreground ,bat-overlay1))))
+         `(breakpoint-enabled ((,class (:foreground ,bat-red :weight bold))))
+
+;;;;; hexl
+         `(hexl-ascii-region ((,class (:foreground ,bat-text :background ,bat-surface0))))
+
+;;;;; highlight-changes
+         `(highlight-changes ((,class (:foreground ,bat-blue))))
+         `(highlight-changes-delete ((,class (:foreground ,bat-red :underline t))))
+
+;;;;; ibuffer
+         `(ibuffer-locked-buffer ((,class (:foreground ,bat-peach))))
+
+;;;;; image-dired
+         `(image-dired-thumb-flagged ((,class (:foreground ,bat-base :background ,bat-red))))
+         `(image-dired-thumb-header-file-size ((,class (:foreground ,bat-sky))))
+         `(image-dired-thumb-mark ((,class (:foreground ,bat-peach))))
+
+;;;;; make-mode
+         `(makefile-makepp-perl ((,class (:background ,bat-surface0))))
+         `(makefile-space ((,class (:background ,bat-red))))
+
+;;;;; markdown-ts-mode
+         `(markdown-ts-code-block-markup-hidden ((,class (:background ,bat-mantle :extend t))))
+         `(markdown-ts-hard-line-break-space ((,class (:background ,bat-surface0))))
+
+;;;;; nxml-mode
+         `(nxml-glyph ((,class (:foreground ,bat-text :background ,bat-surface0))))
+
+;;;;; package
+         `(package-mark-delete-line ((,class (:background ,bat-diff-del-bg :extend t))))
+         `(package-mark-install-line ((,class (:background ,bat-diff-add-bg :extend t))))
+
+;;;;; rcirc
+         `(rcirc-bright-nick ((,class (:foreground ,bat-sky))))
+         `(rcirc-my-nick ((,class (:foreground ,bat-blue))))
+         `(rcirc-nick-in-message ((,class (:foreground ,bat-yellow))))
+         `(rcirc-other-nick ((,class (:foreground ,bat-teal))))
+         `(rcirc-prompt ((,class (:foreground ,bat-sky))))
+         `(rcirc-server ((,class (:foreground ,bat-overlay1))))
+         `(rcirc-server-prefix ((,class (:foreground ,bat-overlay1))))
+
+;;;;; rst-mode
+         `(rst-level-1 ((,class (:foreground ,bat-heading1 :weight bold))))
+         `(rst-level-2 ((,class (:foreground ,bat-heading2 :weight bold))))
+         `(rst-level-3 ((,class (:foreground ,bat-heading3 :weight bold))))
+         `(rst-level-4 ((,class (:foreground ,bat-heading4 :weight bold))))
+         `(rst-level-5 ((,class (:foreground ,bat-heading5 :weight bold))))
+         `(rst-level-6 ((,class (:foreground ,bat-heading6 :weight bold))))
+
+;;;;; table
+         `(table-cell ((,class (:foreground ,bat-text :background ,bat-surface0))))
+
+;;;;; todo-mode
+         `(todo-archived-only ((,class (:foreground ,bat-overlay1))))
+         `(todo-button ((,class (:background ,bat-surface0))))
+         `(todo-category-string ((,class (:foreground ,bat-blue))))
+         `(todo-comment ((,class (:foreground ,bat-overlay1))))
+         `(todo-diary-expired ((,class (:foreground ,bat-subtext1))))
+         `(todo-done ((,class (:foreground ,bat-overlay1))))
+         `(todo-done-sep ((,class (:foreground ,bat-overlay1))))
+         `(todo-mark ((,class (:foreground ,bat-peach :weight bold))))
+         `(todo-nondiary ((,class (:foreground ,bat-green))))
+         `(todo-prefix-string ((,class (:foreground ,bat-teal))))
+         `(todo-search ((,class (:foreground ,bat-text :background ,bat-selection))))
+         `(todo-sorted-column ((,class (:foreground ,bat-text :background ,bat-surface0))))
+         `(todo-top-priority ((,class (:foreground ,bat-peach))))
+
+;;;;; window-tool-bar
+         `(window-tool-bar-button ((,class (:foreground ,bat-text :background ,bat-surface0
+                                                        :box (:line-width -1 :style released-button)))))
+         `(window-tool-bar-button-hover ((,class (:foreground ,bat-text :background ,bat-selection
+                                                              :box (:line-width -1 :style released-button)))))
+         `(window-tool-bar-button-checked ((,class (:foreground ,bat-text :background ,bat-surface0
+                                                                :box (:line-width -1 :style pressed-button)))))
+         `(window-tool-bar-button-checked-hover ((,class (:foreground ,bat-text :background ,bat-selection
+                                                                      :box (:line-width -1 :style pressed-button)))))
+         `(window-tool-bar-button-disabled ((,class (:foreground ,bat-overlay1 :background ,bat-mantle
+                                                                 :box (:line-width -1 :style released-button)))))
 
 ;;;; Third-party packages
 ;;;;; evil

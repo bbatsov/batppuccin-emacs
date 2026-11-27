@@ -3,6 +3,9 @@
 ## main (unreleased)
 
 - [#20](https://github.com/bbatsov/batppuccin-emacs/pull/20): Add appearance options: customizable heading scale factors (`batppuccin-height-1` through `-height-3` and `-height-doc-title`), `batppuccin-use-variable-pitch`, `batppuccin-italic-comments` and `batppuccin-flat-mode-line`.
+- [#23](https://github.com/bbatsov/batppuccin-emacs/pull/23): Theme about 180 built-in faces whose defaults hardcode colors from outside the palette: `help-key-binding`,
+  the Customize state tags, the Ediff ancestor faces, `org-habit`, `org-column`, `proced`, `package`, `rcirc`,
+  `todo-mode`, the Emacs 31 `elisp-*` faces and more.
 - [#22](https://github.com/bbatsov/batppuccin-emacs/pull/22): Fix `batppuccin-get-color`,
   `batppuccin-with-colors`, `batppuccin-reload` and `batppuccin-list-colors` failing with
   "No Batppuccin theme is active" on Emacs 27 and 28, which never recorded the active variant.
